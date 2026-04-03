@@ -1,0 +1,4374 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MeetingMind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        color-scheme: dark;
+        /* Modern Color Palette - Deep Navy & Electric Blue/Purple */
+        --bg0: #0a0f1a;
+        --bg1: #0d1424;
+        --bg2: #111827;
+        --card: rgba(17, 24, 39, 0.85);
+        --cardBorder: rgba(99, 102, 241, 0.15);
+        --cardBorderHover: rgba(99, 102, 241, 0.35);
+        --text: #f8fafc;
+        --textSecondary: #94a3b8;
+        --textMuted: #64748b;
+        --muted: #64748b;
+        --muted2: #475569;
+        
+        /* Primary Gradient Colors */
+        --primary: #6366f1;
+        --primary2: #7c3aed;
+        --gradientBtn: linear-gradient(135deg, #60a5fa 0%, #7c3aed 45%, #22c55e 100%);
+        --primaryLight: #818cf8;
+        --primaryDark: #4f46e5;
+        --secondary: #8b5cf6;
+        --secondaryLight: #a78bfa;
+        
+        /* Accent Colors */
+        --accentBlue: #3b82f6;
+        --accentCyan: #06b6d4;
+        --accentPurple: #a855f7;
+        --good: #10b981;
+        --goodLight: #34d399;
+        --warn: #f59e0b;
+        --warnLight: #fbbf24;
+        --danger: #ef4444;
+        --dangerLight: #f87171;
+        
+        /* Glow & Effects */
+        --glowPrimary: rgba(99, 102, 241, 0.4);
+        --glowSecondary: rgba(139, 92, 246, 0.3);
+        --glowSuccess: rgba(16, 185, 129, 0.3);
+        --ring: rgba(99, 102, 241, 0.3);
+        
+        /* Gradients */
+        --gradientPrimary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+        --gradientBlue: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+        --gradientDark: linear-gradient(180deg, var(--bg1) 0%, var(--bg0) 100%);
+        
+        /* Spacing */
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+        --space-2xl: 48px;
+        
+        /* Border Radius */
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 24px;
+        --radius-full: 9999px;
+        
+        /* Shadows */
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+        --shadowGlow: 0 0 20px var(--glowPrimary);
+        --shadowGlowSuccess: 0 0 20px var(--glowSuccess);
+        
+        /* Transitions */
+        --transition-fast: 150ms ease;
+        --transition-base: 250ms ease;
+        --transition-slow: 350ms ease;
+      }
+
+      :root.light-mode {
+        color-scheme: light;
+        --bg0: #f8fafc;
+        --bg1: #f1f5f9;
+        --bg2: #e2e8f0;
+        --card: rgba(255, 255, 255, 0.95);
+        --cardBorder: rgba(99, 102, 241, 0.12);
+        --cardBorderHover: rgba(99, 102, 241, 0.25);
+        --text: #0f172a;
+        --textSecondary: #475569;
+        --textMuted: #64748b;
+        --muted: #64748b;
+        --muted2: #94a3b8;
+        
+        --primary: #6366f1;
+        --primaryLight: #818cf8;
+        --primaryDark: #4f46e5;
+        --secondary: #8b5cf6;
+        
+        --glowPrimary: rgba(99, 102, 241, 0.2);
+        --glowSecondary: rgba(139, 92, 246, 0.15);
+        --glowSuccess: rgba(16, 185, 129, 0.2);
+        --ring: rgba(99, 102, 241, 0.2);
+        
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      :root.light-mode body {
+        background: var(--bg0);
+      }
+
+      :root.light-mode .card {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid var(--cardBorder);
+        box-shadow: var(--shadow-md);
+      }
+
+      :root.light-mode textarea {
+        background: #ffffff;
+        border-color: #e2e8f0;
+        color: var(--text);
+      }
+
+      :root.light-mode textarea::placeholder {
+        color: #94a3b8;
+      }
+
+      :root.light-mode pre {
+        background: #f8fafc;
+        color: var(--text);
+        border-color: #e2e8f0;
+      }
+
+      :root.light-mode table {
+        border-color: #e2e8f0;
+      }
+
+      :root.light-mode thead {
+        background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+      }
+
+      :root.light-mode th {
+        color: #475569;
+        border-bottom-color: #e2e8f0;
+      }
+
+      :root.light-mode td {
+        color: var(--text);
+        border-bottom-color: #f1f5f9;
+      }
+
+      :root.light-mode tbody tr {
+        background: #ffffff;
+      }
+
+      :root.light-mode tbody tr:hover {
+        background: #f8fafc;
+      }
+
+      :root.light-mode td:first-child {
+        color: var(--text);
+      }
+
+      :root.light-mode .emailInput {
+        background: #ffffff;
+        border-color: #e2e8f0;
+        color: var(--text);
+      }
+
+      :root.light-mode .emailInput::placeholder {
+        color: #94a3b8;
+      }
+
+      :root.light-mode .emailInput:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px var(--ring);
+      }
+
+      :root.light-mode .meeting-summary {
+        background: #ffffff;
+        color: var(--text);
+        border-color: var(--cardBorder);
+      }
+
+      :root.light-mode .sectionTitle {
+        color: var(--text);
+      }
+
+      :root.light-mode h1 {
+        color: var(--text);
+      }
+
+      :root.light-mode .subtitle {
+        color: var(--textSecondary);
+      }
+
+      :root.light-mode .pill {
+        background: #f1f5f9;
+        border-color: #e2e8f0;
+        color: var(--textSecondary);
+      }
+
+      :root.light-mode .muted {
+        color: var(--textMuted);
+      }
+
+      :root.light-mode .btnOutline {
+        background: #ffffff;
+        border-color: var(--cardBorder);
+        color: var(--text);
+      }
+
+      :root.light-mode .btnOutline:hover {
+        background: #f8fafc;
+        border-color: var(--cardBorderHover);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: var(--text);
+        min-height: 100vh;
+        background: var(--bg0);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Animated background gradient */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          radial-gradient(ellipse 80% 50% at 20% 40%, rgba(99, 102, 241, 0.15), transparent),
+          radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.1), transparent),
+          radial-gradient(ellipse 50% 30% at 60% 80%, rgba(59, 130, 246, 0.08), transparent);
+        pointer-events: none;
+        z-index: -1;
+        animation: bgPulse 15s ease-in-out infinite;
+      }
+
+      @keyframes bgPulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+      }
+
+      :root.light-mode body::before {
+        background:
+          radial-gradient(ellipse 80% 50% at 20% 40%, rgba(99, 102, 241, 0.08), transparent),
+          radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.05), transparent);
+      }
+
+      .wrap {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: var(--space-xl) var(--space-md) var(--space-2xl);
+      }
+
+      /* Topbar - Modern Navbar */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-md);
+        margin-bottom: var(--space-xl);
+        padding: var(--space-md) var(--space-lg);
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-md);
+        backdrop-filter: blur(12px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+      }
+
+      /* Modern Logo with Glow */
+      .logo {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--radius-lg);
+        background: var(--gradientPrimary);
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+          0 8px 32px rgba(99, 102, 241, 0.4),
+          0 0 0 4px rgba(99, 102, 241, 0.1);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: logoFloat 6s ease-in-out infinite;
+      }
+
+      .logo::before {
+        content: 'M';
+        font-family: 'Poppins', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .logo::after {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: calc(var(--radius-lg) + 2px);
+        background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent 50%);
+        z-index: -1;
+      }
+
+      @keyframes logoFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+      }
+
+      .titleWrap {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, var(--text) 0%, var(--primaryLight) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      :root.light-mode h1 {
+        background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .subtitle {
+        margin: 0;
+        font-size: 13px;
+        color: var(--textMuted);
+        font-weight: 500;
+      }
+
+      /* Modern Pill Badge */
+      .pill {
+        border: 1px solid var(--cardBorder);
+        background: rgba(99, 102, 241, 0.1);
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-full);
+        color: var(--textSecondary);
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        backdrop-filter: blur(10px);
+        transition: all var(--transition-fast);
+      }
+
+      .pill:hover {
+        background: rgba(99, 102, 241, 0.15);
+        border-color: var(--cardBorderHover);
+        transform: translateY(-1px);
+      }
+
+      :root.light-mode body {
+        background:
+          radial-gradient(900px 420px at 15% 0%, rgba(124, 58, 237, 0.1), transparent 60%),
+          radial-gradient(720px 380px at 85% 5%, rgba(34, 211, 238, 0.08), transparent 55%),
+          linear-gradient(180deg, var(--bg1), var(--bg0));
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(16px);
+        position: relative;
+        overflow: hidden;
+        transition: all var(--transition-base);
+      }
+
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      }
+
+      .card:hover {
+        border-color: var(--cardBorderHover);
+        box-shadow: var(--shadow-xl), 0 0 40px rgba(99, 102, 241, 0.1);
+      }
+
+      .sectionTitle {
+        margin: 0 0 var(--space-lg) 0;
+        font-family: 'Poppins', sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
+      .muted {
+        color: var(--textMuted);
+      }
+
+      /* Modern Buttons */
+      .btn {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        font-weight: 800;
+        color: #07121f;
+        border-radius: 14px;
+        padding: 11px 16px;
+        letter-spacing: 0.01em;
+        background: linear-gradient(135deg, #60a5fa 0%, #7c3aed 45%, #22c55e 100%);
+        background-size: 200% 200%;
+        box-shadow:
+          0 12px 30px rgba(124, 58, 237, 0.25),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        transition: transform 120ms ease, filter 120ms ease;
+        min-width: 140px;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+
+      .btn:active {
+        transform: translateY(0px);
+      }
+
+      .btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        filter: grayscale(0.2);
+      }
+
+      .muted {
+        color: var(--muted2);
+        font-size: 13px;
+      }
+
+      .output {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(148, 163, 184, 0.18);
+      }
+
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+        background: rgba(2, 6, 23, 0.6);
+        color: rgba(229, 231, 235, 0.92);
+        border-radius: 14px;
+        padding: 14px;
+        margin: 10px 0 0;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+      }
+
+      .alert {
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        color: rgba(254, 202, 202, 0.95);
+        border-radius: 14px;
+        padding: 12px 14px;
+        margin-top: 10px;
+        font-size: 13px;
+        border-left: 4px solid rgba(239, 68, 68, 0.85);
+      }
+      .alertSuccess {
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.35);
+        color: rgba(187, 247, 208, 0.95);
+        border-radius: 14px;
+        padding: 12px 14px;
+        margin-top: 10px;
+        font-size: 13px;
+        border-left: 4px solid rgba(34, 197, 94, 0.85);
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0px);
+        }
+      }
+
+      .fadeIn {
+        animation: fadeInUp 520ms ease both;
+      }
+
+      .charRow {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 8px;
+      }
+
+      .charCount {
+        font-size: 12px;
+        color: var(--muted2);
+      }
+
+      .charCount.warn {
+        color: var(--warn);
+      }
+
+      .btnOutline {
+        appearance: none;
+        border: 1px solid rgba(96, 165, 250, 0.45);
+        cursor: pointer;
+        font-weight: 850;
+        color: rgba(229, 231, 235, 0.98);
+        border-radius: 14px;
+        padding: 11px 16px;
+        letter-spacing: 0.01em;
+        background: rgba(2, 6, 23, 0.25);
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+        transition: transform 120ms ease, filter 120ms ease, border-color 120ms ease;
+      }
+
+      .btnOutline:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.06);
+        border-color: rgba(96, 165, 250, 0.75);
+      }
+
+      .emailInput {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(2, 6, 23, 0.45);
+        color: var(--text);
+        padding: 10px 12px;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 120ms ease, box-shadow 120ms ease;
+      }
+
+      .emailInput::placeholder {
+        color: rgba(229, 231, 235, 0.35);
+      }
+
+      .emailInput:focus {
+        border-color: rgba(96, 165, 250, 0.7);
+        box-shadow: 0 0 0 4px var(--ring);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        margin-top: 12px;
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+      }
+
+      thead {
+        background: linear-gradient(135deg, rgba(96, 165, 250, 0.25), rgba(124, 58, 237, 0.22));
+      }
+
+      th {
+        text-align: left;
+        font-size: 12px;
+        color: rgba(229, 231, 235, 0.8);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+      }
+
+      td {
+        vertical-align: top;
+        font-size: 14px;
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      tbody tr:nth-child(3n+1) {
+        background: rgba(34, 197, 94, 0.07);
+      }
+      tbody tr:nth-child(3n+2) {
+        background: rgba(96, 165, 250, 0.07);
+      }
+      tbody tr:nth-child(3n+3) {
+        background: rgba(245, 158, 11, 0.07);
+      }
+
+      tbody tr:hover {
+        background: rgba(148, 163, 184, 0.08);
+      }
+
+      td:first-child {
+        font-weight: 750;
+        color: rgba(229, 231, 235, 0.96);
+      }
+
+      .rowAction {
+        position: relative;
+      }
+      .rowAction::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 12px;
+        bottom: 12px;
+        width: 4px;
+        border-radius: 6px;
+        background: rgba(148, 163, 184, 0.18);
+      }
+      tbody tr:nth-child(3n+1) .rowAction::before {
+        background: rgba(34, 197, 94, 0.7);
+      }
+      tbody tr:nth-child(3n+2) .rowAction::before {
+        background: rgba(96, 165, 250, 0.75);
+      }
+      tbody tr:nth-child(3n+3) .rowAction::before {
+        background: rgba(245, 158, 11, 0.7);
+      }
+
+      .rowAction {
+        padding-left: 14px;
+      }
+
+      .loadingOverlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        background: rgba(2, 6, 23, 0.55);
+        backdrop-filter: blur(4px);
+        padding: 20px;
+      }
+
+      :root.is-loading .loadingOverlay {
+        display: flex;
+      }
+
+      .loadingBox {
+        width: min(520px, 92vw);
+        background: rgba(2, 6, 23, 0.72);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 18px;
+        padding: 18px 18px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+      }
+
+      .spinner {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 4px solid rgba(255, 255, 255, 0.12);
+        border-top-color: rgba(34, 197, 94, 0.9);
+        animation: spin 0.9s linear infinite;
+        flex: 0 0 auto;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loadingText {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .loadingText strong {
+        font-size: 14px;
+      }
+
+      .loadingText span {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .theme-toggle {
+        position: relative;
+        width: 60px;
+        height: 30px;
+        background: rgba(148, 163, 184, 0.2);
+        border-radius: 15px;
+        border: 1px solid var(--cardBorder);
+        cursor: pointer;
+        transition: background-color 200ms ease;
+      }
+
+      .theme-toggle:hover {
+        background: rgba(148, 163, 184, 0.3);
+      }
+
+      .theme-toggle-slider {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 22px;
+        height: 22px;
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        border-radius: 50%;
+        transition: transform 200ms ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      :root.light-mode .theme-toggle-slider {
+        transform: translateX(30px);
+      }
+
+      .priority-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        line-height: 1;
+      }
+
+      .priority-high {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+      }
+
+      .priority-low {
+        background: rgba(34, 197, 94, 0.15);
+        color: #86efac;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+      }
+
+      :root.light-mode .priority-high {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+
+      :root.light-mode .priority-low {
+        background: rgba(34, 197, 94, 0.1);
+        color: #16a34a;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+      }
+
+      .meeting-summary {
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: 14px;
+        padding: 16px;
+        margin: 12px 0;
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--text);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      :root.light-mode .meeting-summary {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .chat-section {
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid var(--cardBorder);
+      }
+
+      .chat-heading {
+        margin: 0 0 16px 0;
+        font-size: 16px;
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .chat-history {
+        max-height: 600px;
+        overflow-y: auto;
+        margin-bottom: 16px;
+        padding: 12px;
+        background: rgba(2, 6, 23, 0.3);
+        border-radius: 12px;
+        border: 1px solid var(--cardBorder);
+      }
+
+      :root.light-mode .chat-history {
+        background: #f5f3ff;
+        border-color: #ddd6fe;
+      }
+
+      .chat-message {
+        margin-bottom: 12px;
+        max-width: 80%;
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        word-wrap: break-word;
+      }
+
+      .chat-message.user {
+        margin-left: auto;
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        color: white;
+        border-bottom-right-radius: 4px;
+      }
+
+      :root.light-mode .chat-message.user {
+        background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      }
+
+      .chat-message.ai {
+        margin-right: auto;
+        background: var(--card);
+        color: var(--text);
+        border: 1px solid var(--cardBorder);
+        border-bottom-left-radius: 4px;
+      }
+
+      :root.light-mode .chat-message.ai {
+        background: #ffffff;
+        border-color: #ddd6fe;
+        color: #1e1b4b;
+      }
+
+      .chat-input-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .chat-input {
+        flex: 1;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(2, 6, 23, 0.45);
+        color: var(--text);
+        padding: 12px 16px;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 120ms ease, box-shadow 120ms ease;
+      }
+
+      :root.light-mode .chat-input {
+        background: #ffffff;
+        border-color: #ddd6fe;
+        color: #1e1b4b;
+      }
+
+      :root.light-mode .chat-input::placeholder {
+        color: #7c3aed;
+      }
+
+      .chat-input:focus {
+        border-color: rgba(96, 165, 250, 0.7);
+        box-shadow: 0 0 0 4px var(--ring);
+      }
+
+      .chat-btn {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        font-weight: 700;
+        color: white;
+        border-radius: 12px;
+        padding: 12px 20px;
+        font-size: 14px;
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        transition: transform 120ms ease, filter 120ms ease;
+        white-space: nowrap;
+      }
+
+      .chat-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+
+      .chat-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 12px 16px;
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: 16px;
+        border-bottom-left-radius: 4px;
+        margin-bottom: 12px;
+        width: fit-content;
+      }
+
+      :root.light-mode .typing-indicator {
+        background: #ffffff;
+        border-color: #ddd6fe;
+      }
+
+      .typing-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--muted);
+        border-radius: 50%;
+        animation: typingBounce 1.4s infinite ease-in-out both;
+      }
+
+      :root.light-mode .typing-dot {
+        background: #7c3aed;
+      }
+
+      .typing-dot:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+
+      .typing-dot:nth-child(2) {
+        animation-delay: -0.16s;
+      }
+
+      @keyframes typingBounce {
+        0%, 80%, 100% {
+          transform: scale(0);
+        }
+        40% {
+          transform: scale(1);
+        }
+      }
+
+      .chat-error {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        border-radius: 8px;
+        color: #fca5a5;
+        font-size: 13px;
+      }
+
+      :root.light-mode .chat-error {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border-color: rgba(239, 68, 68, 0.25);
+      }
+
+      :root.is-loading textarea,
+      :root.is-loading .btn,
+      :root.is-loading .emailInput {
+        opacity: 0.85;
+        pointer-events: none;
+      }
+
+      .audio-section {
+        margin-bottom: 20px;
+        padding: 16px;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: 12px;
+      }
+
+      :root.light-mode .audio-section {
+        background: #d1fae5;
+        border-color: #6ee7b7;
+      }
+
+      .audio-input-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .audio-file-input {
+        display: none;
+      }
+
+      .audio-file-label {
+        flex: 1;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(2, 6, 23, 0.45);
+        color: var(--text);
+        padding: 10px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: border-color 120ms ease, box-shadow 120ms ease;
+        overflow: hidden;
+      }
+
+      :root.light-mode .audio-file-label {
+        background: #ffffff;
+        border-color: #6ee7b7;
+        color: #1e1b4b;
+      }
+
+      .audio-file-label:hover {
+        border-color: rgba(16, 185, 129, 0.7);
+      }
+
+      .audio-file-label .filename {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      :root.light-mode .audio-file-label .filename {
+        color: #059669;
+      }
+
+      .audio-btn {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        font-weight: 700;
+        color: white;
+        border-radius: 10px;
+        padding: 10px 16px;
+        font-size: 13px;
+        background: linear-gradient(135deg, #10b981, #059669);
+        transition: transform 120ms ease, filter 120ms ease;
+        white-space: nowrap;
+      }
+
+      .audio-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+
+      .audio-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .audio-error {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        border-radius: 8px;
+        color: #fca5a5;
+        font-size: 13px;
+      }
+
+      :root.light-mode .audio-error {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border-color: rgba(239, 68, 68, 0.25);
+      }
+
+      .audio-loading {
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .audio-progress {
+        width: 100%;
+        height: 4px;
+        background: rgba(16, 185, 129, 0.2);
+        border-radius: 2px;
+        margin-top: 8px;
+        overflow: hidden;
+      }
+
+      .audio-progress-bar {
+        height: 100%;
+        background: linear-gradient(135deg, #10b981, #059669);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+        width: 0%;
+      }
+
+      .youtube-section {
+        margin-bottom: 20px;
+        padding: 16px;
+        background: rgba(124, 58, 237, 0.1);
+        border: 1px solid rgba(124, 58, 237, 0.3);
+        border-radius: 12px;
+      }
+
+      :root.light-mode .youtube-section {
+        background: #ede9fe;
+        border-color: #ddd6fe;
+      }
+
+      .youtube-input-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .youtube-input {
+        flex: 1;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: rgba(2, 6, 23, 0.45);
+        color: var(--text);
+        padding: 10px 12px;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 120ms ease, box-shadow 120ms ease;
+      }
+
+      :root.light-mode .youtube-input {
+        background: #ffffff;
+        border-color: #ddd6fe;
+        color: #1e1b4b;
+      }
+
+      :root.light-mode .youtube-input::placeholder {
+        color: #7c3aed;
+      }
+
+      .youtube-input:focus {
+        border-color: rgba(96, 165, 250, 0.7);
+        box-shadow: 0 0 0 4px var(--ring);
+      }
+
+      .youtube-btn {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        font-weight: 700;
+        color: white;
+        border-radius: 10px;
+        padding: 10px 16px;
+        font-size: 13px;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        transition: transform 120ms ease, filter 120ms ease;
+        white-space: nowrap;
+      }
+
+      .youtube-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+
+      .youtube-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .youtube-error {
+        margin-top: 10px;
+        padding: 10px 12px;
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        border-radius: 8px;
+        color: #fca5a5;
+        font-size: 13px;
+      }
+
+      :root.light-mode .youtube-error {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border-color: rgba(239, 68, 68, 0.25);
+      }
+
+      .youtube-loading {
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .chip-suggestion {
+        background: rgba(96, 165, 250, 0.08);
+        border: 1px solid rgba(96, 165, 250, 0.25);
+        color: rgba(229, 231, 235, 0.85);
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background 120ms ease, border-color 120ms ease;
+      }
+      .chip-suggestion:hover {
+        background: rgba(96, 165, 250, 0.15);
+        border-color: rgba(96, 165, 250, 0.5);
+      }
+      :root.light-mode .chip-suggestion {
+        background: #ede9fe;
+        border-color: #ddd6fe;
+        color: #4c1d95;
+      }
+      :root.light-mode .chip-suggestion:hover {
+        background: #ddd6fe;
+      }
+
+      .editable-cell {
+        cursor: text;
+        transition: background 120ms ease;
+      }
+      .editable-cell:hover {
+        background: rgba(96, 165, 250, 0.07);
+      }
+      .editable-cell:focus {
+        outline: 2px solid rgba(96, 165, 250, 0.6);
+        outline-offset: -2px;
+        border-radius: 6px;
+        background: rgba(96, 165, 250, 0.05);
+      }
+
+      /* ── Tab Navigation ── */
+      .tabs-nav {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 20px;
+        background: rgba(2, 6, 23, 0.4);
+        border: 1px solid var(--cardBorder);
+        border-radius: 16px;
+        padding: 6px;
+      }
+
+      .tab-btn {
+        flex: 1;
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        background: transparent;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 10px 12px;
+        border-radius: 12px;
+        transition: background 150ms ease, color 150ms ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        white-space: nowrap;
+      }
+
+      .tab-btn:hover {
+        background: rgba(96, 165, 250, 0.08);
+        color: var(--text);
+      }
+
+      .tab-btn.active {
+        background: linear-gradient(135deg, rgba(96,165,250,0.18), rgba(124,58,237,0.18));
+        color: var(--text);
+        border: 1px solid rgba(96, 165, 250, 0.3);
+      }
+
+      .tab-btn .tab-num {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: rgba(148,163,184,0.2);
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+      }
+
+      .tab-btn.active .tab-num {
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        color: white;
+      }
+
+      .tab-btn.done .tab-num {
+        background: var(--good);
+        color: white;
+      }
+
+      .tab-btn.done .tab-num::after {
+        content: "✓";
+      }
+
+      .tab-panel {
+        display: none;
+      }
+
+      .tab-panel.active {
+        display: block;
+        animation: fadeInUp 350ms ease both;
+      }
+
+      :root.light-mode .tabs-nav {
+        background: rgba(245, 243, 255, 0.8);
+        border-color: rgba(124, 58, 237, 0.15);
+      }
+
+      :root.light-mode .tab-btn.active {
+        background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(109,40,217,0.12));
+        border-color: rgba(124,58,237,0.3);
+      }
+
+      .tab-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 24px;
+        padding-top: 18px;
+        border-top: 1px solid var(--cardBorder);
+      }
+
+      .tab-footer-right {
+        display: flex;
+        gap: 10px;
+      }
+
+      /* ── Enhanced Visual Effects ── */
+
+      /* Animated gradient background for buttons */
+      .btn {
+        background-size: 200% 200%;
+        animation: gradientShift 8s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      /* Enhanced card hover effect */
+      .card {
+        transition: transform 200ms ease, box-shadow 200ms ease;
+      }
+
+      .card:hover {
+        transform: translateY(0);
+        box-shadow:
+          0 25px 65px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+          0 0 30px rgba(124, 58, 237, 0.15);
+      }
+
+      :root.light-mode .card:hover {
+        box-shadow:
+          0 25px 65px rgba(124, 58, 237, 0.15),
+          0 0 0 1px rgba(124, 58, 237, 0.1) inset;
+      }
+
+      /* Glassmorphism enhancement for pills */
+      .pill {
+        backdrop-filter: blur(10px);
+        transition: all 200ms ease;
+      }
+
+      .pill:hover {
+        background: rgba(2, 6, 23, 0.5);
+        border-color: rgba(148, 163, 184, 0.35);
+        transform: translateY(-1px);
+      }
+
+      :root.light-mode .pill:hover {
+        background: #f5f3ff;
+        border-color: #c4b5fd;
+      }
+
+      /* Enhanced textarea with glow effect */
+      textarea {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        min-height: 520px;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      textarea#transcript {
+        min-height: 520px;
+      }
+
+      textarea:focus {
+        box-shadow:
+          0 0 0 4px var(--ring),
+          0 0 20px rgba(96, 165, 250, 0.3);
+      }
+
+      /* Smooth row animations for table */
+      tbody tr {
+        transition: background 200ms ease, transform 150ms ease;
+      }
+
+      tbody tr:hover {
+        transform: scale(1.002);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      :root.light-mode tbody tr:hover {
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08);
+      }
+
+      /* Enhanced priority badges with glow */
+      .priority-high {
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+      }
+
+      .priority-low {
+        box-shadow: 0 2px 8px rgba(34, 197, 94, 0.25);
+      }
+
+      /* Enhanced tab buttons */
+      .tab-btn {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tab-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 300ms ease;
+      }
+
+      .tab-btn:hover::before {
+        left: 100%;
+      }
+
+      .tab-btn.active {
+        box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);
+      }
+
+      /* Enhanced chat messages with better shadows */
+      .chat-message.user {
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+      }
+
+      .chat-message.ai {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      :root.light-mode .chat-message.ai {
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.08);
+      }
+
+      /* Enhanced input fields */
+      .emailInput, .chat-input, .youtube-input {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+
+      .emailInput:focus, .chat-input:focus, .youtube-input:focus {
+        box-shadow:
+          0 0 0 4px var(--ring),
+          0 0 15px rgba(96, 165, 250, 0.25);
+      }
+
+      /* Audio and YouTube section enhancements */
+      .audio-section, .youtube-section {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .audio-section::before, .youtube-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+        animation: shimmer 6s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      @keyframes shimmer {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        50% { transform: translate(10%, 10%) rotate(180deg); }
+      }
+
+      /* Enhanced logo animation */
+      .logo {
+        animation: logoPulse 4s ease-in-out infinite;
+      }
+
+      @keyframes logoPulse {
+        0%, 100% { box-shadow: 0 12px 30px rgba(124, 58, 237, 0.22), 0 0 22px rgba(96, 165, 250, 0.18); }
+        50% { box-shadow: 0 12px 40px rgba(124, 58, 237, 0.35), 0 0 35px rgba(96, 165, 250, 0.28); }
+      }
+
+      /* Enhanced loading spinner */
+      .spinner {
+        box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+      }
+
+      /* Better alert styling with icons */
+      .alert {
+        position: relative;
+        padding-left: 40px;
+      }
+
+      .alert::before {
+        content: '⚠️';
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+      }
+
+      .alertSuccess {
+        position: relative;
+        padding-left: 40px;
+      }
+
+      .alertSuccess::before {
+        content: '✅';
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+      }
+
+      /* Enhanced meeting summary */
+      .meeting-summary {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .meeting-summary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--primary2), var(--good));
+      }
+
+      /* Smooth page load animation */
+      .wrap {
+        animation: pageLoad 600ms ease-out;
+      }
+
+      @keyframes pageLoad {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Enhanced button hover states */
+      .btnOutline {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btnOutline::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(96, 165, 250, 0.1);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 300ms ease, height 300ms ease;
+      }
+
+      .btnOutline:hover::after {
+        width: 200%;
+        height: 200%;
+      }
+
+      /* Stats bar enhancement */
+      .tab-panel .stats-bar > div {
+        transition: transform 150ms ease, box-shadow 150ms ease;
+      }
+
+      .tab-panel .stats-bar > div:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Chip suggestions enhancement */
+      .chip-suggestion {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .chip-suggestion::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 300ms ease;
+      }
+
+      .chip-suggestion:hover::before {
+        left: 100%;
+      }
+
+      /* Better focus visible for accessibility */
+      button:focus-visible, input:focus-visible, textarea:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      /* Enhanced editable cells */
+      .editable-cell {
+        border-radius: 6px;
+        padding: 4px 8px;
+        margin: -4px -8px;
+      }
+
+      .editable-cell:hover {
+        box-shadow: 0 2px 8px rgba(96, 165, 250, 0.15);
+      }
+
+      .editable-cell:focus {
+        box-shadow:
+          0 0 0 2px rgba(96, 165, 250, 0.6),
+          0 4px 12px rgba(96, 165, 250, 0.2);
+      }
+
+      /* Audio progress bar glow */
+      .audio-progress-bar {
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+      }
+
+      /* Theme toggle enhancement */
+      .theme-toggle {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .theme-toggle:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Better scrollbar styling */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(2, 6, 23, 0.3);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.4);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(148, 163, 184, 0.6);
+      }
+
+      :root.light-mode ::-webkit-scrollbar-track {
+        background: #f5f3ff;
+      }
+
+      :root.light-mode ::-webkit-scrollbar-thumb {
+        background: #ddd6fe;
+      }
+
+      :root.light-mode ::-webkit-scrollbar-thumb:hover {
+        background: #c4b5fd;
+      }
+
+      /* Sort button enhancement */
+      #sortPriorityBtn {
+        transition: all 150ms ease;
+      }
+
+      #sortPriorityBtn:hover {
+        background: rgba(96, 165, 250, 0.25);
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(96, 165, 250, 0.3);
+      }
+
+      /* Loading box enhancement */
+      .loadingBox {
+        animation: loadingPulse 2s ease-in-out infinite;
+      }
+
+      @keyframes loadingPulse {
+        0%, 100% { box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5); }
+        50% { box-shadow: 0 25px 100px rgba(0, 0, 0, 0.6), 0 0 30px rgba(96, 165, 250, 0.1); }
+      }
+
+      /* Better table header styling */
+      thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      th {
+        backdrop-filter: blur(10px);
+      }
+
+      /* H1 enhanced gradient text */
+      h1 {
+        background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 50%, #f9fafb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      :root.light-mode h1 {
+        background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #1e1b4b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+        padding: 40px 0 60px;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .hero-section {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+      }
+
+      .hero-content {
+        animation: fadeInUp 0.8s ease both;
+      }
+
+      .hero-title {
+        font-family: 'Poppins', sans-serif;
+        font-size: 42px;
+        font-weight: 800;
+        line-height: 1.15;
+        margin: 0 0 16px 0;
+        background: linear-gradient(135deg, var(--text) 0%, var(--primaryLight) 50%, var(--good) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.02em;
+      }
+
+      :root.light-mode .hero-title {
+        background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #7c3aed 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-subtitle {
+        font-size: 16px;
+        color: var(--textSecondary);
+        margin: 0 0 28px 0;
+        line-height: 1.6;
+        max-width: 480px;
+      }
+
+      @media (max-width: 768px) {
+        .hero-subtitle {
+          max-width: 100%;
+        }
+      }
+
+      .hero-cta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 768px) {
+        .hero-cta {
+          justify-content: center;
+        }
+      }
+
+      .hero-visual {
+        position: relative;
+        height: 300px;
+        animation: fadeInUp 0.8s ease 0.2s both;
+      }
+
+      .floating-card {
+        position: absolute;
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: 16px;
+        padding: 16px 20px;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .floating-icon {
+        font-size: 24px;
+      }
+
+      .floating-text {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .card-1 {
+        top: 20px;
+        left: 20px;
+        animation-delay: 0s;
+      }
+
+      .card-2 {
+        top: 100px;
+        right: 20px;
+        animation-delay: -2s;
+      }
+
+      .card-3 {
+        bottom: 40px;
+        left: 60px;
+        animation-delay: -4s;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+
+      /* Step Flow Indicator */
+      .step-flow {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 32px;
+        padding: 20px 24px;
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: var(--radius-xl);
+        backdrop-filter: blur(16px);
+      }
+
+      @media (max-width: 768px) {
+        .step-flow {
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+      }
+
+      .step-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        position: relative;
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
+      }
+
+      .step-item.active,
+      .step-item.completed {
+        opacity: 1;
+      }
+
+      .step-number {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--bg2);
+        border: 2px solid var(--cardBorder);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--muted);
+        transition: all 0.3s ease;
+      }
+
+      .step-item.active .step-number {
+        background: var(--gradientPrimary);
+        border-color: transparent;
+        color: white;
+        box-shadow: var(--shadowGlow);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      .step-item.completed .step-number {
+        background: var(--good);
+        border-color: transparent;
+        color: white;
+      }
+
+      .step-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--textSecondary);
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 768px) {
+        .step-label {
+          white-space: normal;
+          font-size: 11px;
+        }
+      }
+
+      .step-bar {
+        position: absolute;
+        top: 18px;
+        right: -50%;
+        width: calc(100% - 36px);
+        height: 2px;
+        background: var(--cardBorder);
+        z-index: -1;
+      }
+
+      .step-item:last-child .step-bar {
+        display: none;
+      }
+
+      .step-item.completed .step-bar,
+      .step-item.active .step-bar {
+        background: linear-gradient(90deg, var(--good), var(--primary));
+      }
+
+      @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+        50% { box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
+      }
+
+      /* Enhanced Table Animations */
+      tbody tr {
+        transition: all 200ms ease;
+        animation: slideInRow 0.4s ease both;
+      }
+
+      @keyframes slideInRow {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      tbody tr:hover {
+        transform: scale(1.01) translateX(4px);
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+        background: rgba(99, 102, 241, 0.08);
+        z-index: 1;
+        position: relative;
+      }
+
+      /* Inline Edit Animation */
+      .editable-cell {
+        transition: all 0.2s ease;
+        border-radius: 6px;
+        padding: 4px 8px;
+        margin: -4px -8px;
+      }
+
+      .editable-cell:hover {
+        background: rgba(99, 102, 241, 0.1);
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+      }
+
+      .editable-cell:focus {
+        outline: none;
+        background: var(--card);
+        box-shadow: 0 0 0 3px var(--ring), 0 4px 12px rgba(99, 102, 241, 0.2);
+        animation: editPulse 0.3s ease;
+      }
+
+      @keyframes editPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+      }
+
+      /* Insight Cards */
+      .insight-cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      @media (max-width: 768px) {
+        .insight-cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .insight-card {
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.5s ease both;
+      }
+
+      .insight-card:nth-child(1) { animation-delay: 0.1s; }
+      .insight-card:nth-child(2) { animation-delay: 0.2s; }
+      .insight-card:nth-child(3) { animation-delay: 0.3s; }
+      .insight-card:nth-child(4) { animation-delay: 0.4s; }
+
+      .insight-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--cardBorderHover);
+      }
+
+      .insight-icon {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      .insight-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 4px;
+        background: linear-gradient(135deg, var(--primary), var(--good));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .insight-label {
+        font-size: 12px;
+        color: var(--textSecondary);
+        font-weight: 600;
+      }
+
+      /* Productivity Score */
+      .productivity-score {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(34, 197, 94, 0.15));
+        border: 1px solid var(--cardBorder);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .productivity-score {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+
+      .score-display {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .score-ring {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: conic-gradient(var(--primary) 0deg, var(--primary) calc(var(--score-deg, 0deg)), var(--bg2) calc(var(--score-deg, 0deg)));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        animation: scoreRotate 1s ease-out;
+      }
+
+      @keyframes scoreRotate {
+        from { transform: rotate(-90deg); }
+        to { transform: rotate(0deg); }
+      }
+
+      .score-inner {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: var(--card);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--text);
+      }
+
+      .score-text h4 {
+        margin: 0 0 4px 0;
+        font-size: 16px;
+        color: var(--text);
+      }
+
+      .score-text p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--textSecondary);
+      }
+
+      /* Empty State */
+      .empty-state {
+        text-align: center;
+        padding: 60px 40px;
+        animation: fadeInUp 0.6s ease both;
+      }
+
+      .empty-illustration {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: bounce 2s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+
+      .empty-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+
+      .empty-subtitle {
+        font-size: 14px;
+        color: var(--textSecondary);
+        margin-bottom: 24px;
+      }
+
+      /* PDF Preview Card */
+      .pdf-preview {
+        background: var(--card);
+        border: 2px dashed var(--cardBorder);
+        border-radius: var(--radius-lg);
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .pdf-preview:hover {
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.05);
+      }
+
+      .pdf-icon {
+        font-size: 48px;
+        margin-bottom: 12px;
+      }
+
+      .pdf-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+
+      .pdf-meta {
+        font-size: 13px;
+        color: var(--textSecondary);
+        margin-bottom: 16px;
+      }
+
+      /* Button Micro-interactions */
+      .btn, .btnOutline, .chat-btn, .audio-btn, .youtube-btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .btn::after, .btnOutline::after, .chat-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.4s ease, height 0.4s ease;
+      }
+
+      .btn:active::after, .btnOutline:active::after, .chat-btn:active::after {
+        width: 200%;
+        height: 200%;
+      }
+
+      .btn:active, .btnOutline:active, .chat-btn:active {
+        transform: scale(0.96);
+      }
+
+      /* Chat Feature Styles */
+      .chat-container {
+        background: var(--bg2);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        min-height: 300px;
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 16px;
+        border: 1px solid var(--cardBorder);
+      }
+
+      .chat-welcome {
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .chat-welcome-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+
+      .chat-welcome-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+
+      .chat-welcome-subtitle {
+        font-size: 14px;
+        color: var(--textSecondary);
+        margin-bottom: 24px;
+      }
+
+      .chat-suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+      }
+
+      .chat-suggestion-chip {
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 13px;
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .chat-suggestion-chip:hover {
+        background: rgba(96, 165, 250, 0.1);
+        border-color: rgba(96, 165, 250, 0.4);
+      }
+
+      .chat-message-user,
+      .chat-message-ai {
+        margin-bottom: 16px;
+        display: flex;
+      }
+
+      .chat-message-user {
+        justify-content: flex-end;
+      }
+
+      .chat-message-ai {
+        justify-content: flex-start;
+      }
+
+      .chat-bubble-user,
+      .chat-bubble-ai {
+        max-width: 80%;
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        word-wrap: break-word;
+      }
+
+      .chat-bubble-user {
+        background: var(--primary);
+        color: white;
+        border-bottom-right-radius: 4px;
+      }
+
+      .chat-bubble-ai {
+        background: var(--card);
+        color: var(--text);
+        border: 1px solid var(--cardBorder);
+        border-bottom-left-radius: 4px;
+      }
+
+      .chat-loading {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        margin-bottom: 16px;
+        color: var(--textSecondary);
+        font-size: 14px;
+      }
+
+      .chat-loading-text {
+        font-style: italic;
+      }
+
+      .typing-indicator {
+        display: flex;
+        gap: 4px;
+      }
+
+      .typing-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--primary);
+        border-radius: 50%;
+        animation: typingBounce 1.4s ease-in-out infinite;
+      }
+
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typingBounce {
+        0%, 60%, 100% { transform: translateY(0); }
+        30% { transform: translateY(-6px); }
+      }
+
+      .chat-error-message {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #fca5a5;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        font-size: 14px;
+      }
+
+      .chat-disabled {
+        text-align: center;
+        padding: 60px 40px;
+        border: 2px dashed var(--cardBorder);
+        border-radius: var(--radius-lg);
+        margin-bottom: 16px;
+      }
+
+      .chat-disabled-icon {
+        font-size: 64px;
+        margin-bottom: 16px;
+      }
+
+      .chat-disabled-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+
+      .chat-disabled-subtitle {
+        font-size: 14px;
+        color: var(--textSecondary);
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .chat-input-area {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .chat-input {
+        flex: 1;
+        background: var(--bg2);
+        border: 1px solid var(--cardBorder);
+        border-radius: 24px;
+        padding: 12px 20px;
+        font-size: 14px;
+        color: var(--text);
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .chat-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--ring);
+      }
+
+      .chat-input:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Voice Input Button */
+      .voice-input-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        background: var(--bg2);
+        border: 1px solid var(--cardBorder);
+        border-radius: 50%;
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+      }
+
+      .voice-input-btn:hover {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.5);
+        color: #ef4444;
+      }
+
+      .voice-input-btn.recording {
+        background: rgba(239, 68, 68, 0.2);
+        border-color: #ef4444;
+        color: #ef4444;
+        animation: pulseRecording 1.5s ease-in-out infinite;
+      }
+
+      @keyframes pulseRecording {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+        50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+      }
+
+      /* Voice Mode Toggle */
+      .voice-mode-toggle {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        padding: 0 4px;
+      }
+
+      .voice-toggle-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .voice-toggle-label input {
+        display: none;
+      }
+
+      .voice-toggle-slider {
+        position: relative;
+        width: 44px;
+        height: 24px;
+        background: var(--bg2);
+        border: 1px solid var(--cardBorder);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .voice-toggle-slider::before {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 18px;
+        height: 18px;
+        background: var(--textSecondary);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .voice-toggle-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 10px;
+        opacity: 0.7;
+      }
+
+      .voice-toggle-label input:checked + .voice-toggle-slider {
+        background: rgba(34, 197, 94, 0.2);
+        border-color: rgba(34, 197, 94, 0.5);
+      }
+
+      .voice-toggle-label input:checked + .voice-toggle-slider::before {
+        transform: translateX(20px);
+        background: #22c55e;
+      }
+
+      .voice-toggle-text {
+        font-size: 13px;
+        color: var(--textSecondary);
+        font-weight: 500;
+      }
+
+      /* Voice Status Indicator */
+      .voice-status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 16px 24px;
+        margin-bottom: 16px;
+        background: var(--bg2);
+        border: 1px solid var(--cardBorder);
+        border-radius: var(--radius-lg);
+      }
+
+      .voice-status-icon {
+        font-size: 24px;
+        animation: bounce 1s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-4px); }
+      }
+
+      .voice-status.speaking .voice-status-icon {
+        animation: soundWave 0.5s ease-in-out infinite;
+      }
+
+      @keyframes soundWave {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+      }
+
+      .voice-status-text {
+        font-size: 14px;
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      /* Modern Action Items Styles */
+      .action-items-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+        padding: 16px;
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: var(--radius-lg);
+      }
+
+      .action-items-count {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .action-items-filters {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .filter-chip {
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 1px solid var(--cardBorder);
+        background: var(--bg2);
+        color: var(--textSecondary);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .filter-chip:hover {
+        border-color: rgba(96, 165, 250, 0.5);
+        color: var(--text);
+      }
+
+      .filter-chip.active {
+        background: rgba(96, 165, 250, 0.15);
+        border-color: rgba(96, 165, 250, 0.5);
+        color: var(--text);
+      }
+
+      .filter-chip.high.active {
+        background: rgba(239, 68, 68, 0.15);
+        border-color: rgba(239, 68, 68, 0.5);
+        color: #fca5a5;
+      }
+
+      .filter-chip.low.active {
+        background: rgba(34, 197, 94, 0.15);
+        border-color: rgba(34, 197, 94, 0.5);
+        color: #86efac;
+      }
+
+      .sort-dropdown select {
+        padding: 8px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--cardBorder);
+        background: var(--bg2);
+        color: var(--text);
+        font-size: 13px;
+        cursor: pointer;
+        outline: none;
+      }
+
+      .sort-dropdown select:focus {
+        border-color: var(--primary);
+      }
+
+      .action-items-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      @media (max-width: 768px) {
+        .action-items-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .action-item-card {
+        background: var(--card);
+        border: 1px solid var(--cardBorder);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .action-item-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--primary);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .action-item-card[data-priority="High"]::before {
+        background: linear-gradient(90deg, #ef4444, #f87171);
+        opacity: 1;
+      }
+
+      .action-item-card[data-priority="Low"]::before {
+        background: linear-gradient(90deg, #22c55e, #4ade80);
+        opacity: 1;
+      }
+
+      .action-item-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--cardBorderHover);
+      }
+
+      .action-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .priority-badge-modern {
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .priority-badge-modern.priority-high {
+        background: rgba(239, 68, 68, 0.15);
+        color: #fca5a5;
+      }
+
+      .priority-badge-modern.priority-low {
+        background: rgba(34, 197, 94, 0.15);
+        color: #86efac;
+      }
+
+      .action-item-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .icon-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: 1px solid var(--cardBorder);
+        background: var(--bg2);
+        color: var(--textSecondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .icon-btn:hover {
+        background: rgba(96, 165, 250, 0.1);
+        border-color: rgba(96, 165, 250, 0.5);
+        color: var(--primary);
+      }
+
+      .action-item-body {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .action-item-row {
+        display: flex;
+        gap: 12px;
+      }
+
+      .action-item-field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+      }
+
+      .action-item-field.half {
+        flex: 0 0 calc(50% - 6px);
+      }
+
+      .action-item-field label {
+        font-size: 11px;
+        color: var(--textSecondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .editable-field {
+        padding: 10px 12px;
+        background: var(--bg2);
+        border: 1px solid var(--cardBorder);
+        border-radius: 8px;
+        font-size: 14px;
+        color: var(--text);
+        min-height: 40px;
+        transition: all 0.2s ease;
+        cursor: text;
+      }
+
+      .editable-field:hover {
+        border-color: rgba(96, 165, 250, 0.5);
+      }
+
+      .editable-field:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--ring);
+      }
+
+      .email-input-modern {
+        padding: 10px 12px;
+        background: var(--bg2);
+        border: 1px solid var(--cardBorder);
+        border-radius: 8px;
+        font-size: 14px;
+        color: var(--text);
+        width: 100%;
+        transition: all 0.2s ease;
+      }
+
+      .email-input-modern:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--ring);
+      }
+
+      .email-input-modern::placeholder {
+        color: var(--muted);
+      }
+
+      /* Action item card animation */
+      .action-item-card {
+        animation: fadeInUp 0.4s ease both;
+      }
+
+      .action-item-card:nth-child(1) { animation-delay: 0.05s; }
+      .action-item-card:nth-child(2) { animation-delay: 0.1s; }
+      .action-item-card:nth-child(3) { animation-delay: 0.15s; }
+      .action-item-card:nth-child(4) { animation-delay: 0.2s; }
+      .action-item-card:nth-child(5) { animation-delay: 0.25s; }
+      .action-item-card:nth-child(6) { animation-delay: 0.3s; }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Hide cards when filtered */
+      .action-item-card.hidden {
+        display: none;
+      }
+
+      /* Update chat input area for voice button */
+      .chat-input-area {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .chat-send-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 24px;
+        padding: 12px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .chat-send-btn:hover:not(:disabled) {
+        background: var(--primaryLight);
+        transform: scale(1.02);
+      }
+
+      .chat-send-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Fade in animation for results */
+      .fade-in-result {
+        animation: fadeInResult 0.6s ease both;
+      }
+
+      @keyframes fadeInResult {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Add to calendar button enhancement */
+      td button[onclick*="addToGoogleCalendar"] {
+        transition: all 150ms ease;
+      }
+
+      td button[onclick*="addToGoogleCalendar"]:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+      }
+.sort-chip {
+  appearance: none;
+  border: 1px solid var(--cardBorder);
+  background: rgba(2, 6, 23, 0.3);
+  color: var(--muted);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+  white-space: nowrap;
+}
+.sort-chip:hover {
+  background: rgba(96, 165, 250, 0.1);
+  border-color: rgba(96, 165, 250, 0.4);
+  color: var(--text);
+}
+.sort-chip.active {
+  background: rgba(96, 165, 250, 0.15);
+  border-color: rgba(96, 165, 250, 0.5);
+  color: var(--text);
+}
+.sort-chip.high.active {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+}
+.sort-chip.low.active {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #86efac;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="loadingOverlay" aria-live="polite" aria-busy="true">
+      <div class="loadingBox">
+        <div class="spinner"></div>
+        <div class="loadingText">
+          <strong>Analyzing transcript…</strong>
+          <span>Extracting action items, owners, and deadlines.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="hero-content">
+          <h1 class="hero-title">Turn Meetings into Actionable Insights in Seconds</h1>
+          <p class="hero-subtitle">AI-powered meeting summarization that extracts action items, assigns owners, and sets deadlines automatically. No more manual note-taking.</p>
+          <div class="hero-cta">
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('transcript').focus(); document.getElementById('transcript').scrollIntoView({behavior: 'smooth', block: 'center'});">
+              ✏️ Paste Transcript
+            </button>
+            <button type="button" class="btnOutline btn-secondary" onclick="document.getElementById('sampleBtn').click(); document.querySelector('.btn[type=submit]').scrollIntoView({behavior: 'smooth', block: 'center'});">
+              🚀 Try Demo
+            </button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="floating-card card-1">
+            <div class="floating-icon">📋</div>
+            <div class="floating-text">Extract Action Items</div>
+          </div>
+          <div class="floating-card card-2">
+            <div class="floating-icon">🤖</div>
+            <div class="floating-text">AI Processing</div>
+          </div>
+          <div class="floating-card card-3">
+            <div class="floating-icon">📧</div>
+            <div class="floating-text">Auto-Assign & Email</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step Flow Indicator -->
+      <div class="step-flow" id="stepFlow">
+        <div class="step-item {% if not transcript %}active{% elif action_items %}completed{% endif %}" data-step="1">
+          <div class="step-number">1</div>
+          <div class="step-label">Input Transcript</div>
+          <div class="step-bar"></div>
+        </div>
+        <div class="step-item {% if transcript and not action_items %}active{% elif action_items %}completed{% endif %}" data-step="2">
+          <div class="step-number">2</div>
+          <div class="step-label">AI Processing</div>
+          <div class="step-bar"></div>
+        </div>
+        <div class="step-item {% if action_items and not success_message %}active{% endif %}" data-step="3">
+          <div class="step-number">3</div>
+          <div class="step-label">Action Items + Summary</div>
+          <div class="step-bar"></div>
+        </div>
+        <div class="step-item {% if success_message %}active{% endif %}" data-step="4">
+          <div class="step-number">4</div>
+          <div class="step-label">Export / Share</div>
+        </div>
+      </div>
+      <!-- Top bar -->
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div class="titleWrap">
+            <h1>MeetingMind</h1>
+            <p class="subtitle">Turn transcripts into clear next steps.</p>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="pill">No storage. Runs server-side.</div>
+          <div class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+            <div class="theme-toggle-slider"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="tabs-nav" role="tablist">
+        <button class="tab-btn active" role="tab" data-tab="tab-input" id="btn-input">
+          <span class="tab-num">1</span> Input
+        </button>
+        <button class="tab-btn {% if action_items %}done{% endif %}" role="tab" data-tab="tab-results" id="btn-results">
+          <span class="tab-num">{% if action_items %}✓{% else %}2{% endif %}</span> Action Items
+        </button>
+        <button class="tab-btn {% if action_items %}done{% endif %}" role="tab" data-tab="tab-email" id="btn-email">
+          <span class="tab-num">{% if action_items %}✓{% else %}3{% endif %}</span> Email & Calendar
+        </button>
+        <button class="tab-btn {% if action_items %}done{% endif %}" role="tab" data-tab="tab-chat" id="btn-chat">
+          <span class="tab-num">{% if action_items %}✓{% else %}4{% endif %}</span> Chat
+        </button>
+        <button class="tab-btn {% if action_items %}done{% endif %}" role="tab" data-tab="tab-export" id="btn-export">
+          <span class="tab-num">{% if action_items %}✓{% else %}5{% endif %}</span> Export
+        </button>
+      </div>
+
+      <div class="card">
+
+        <!-- ── TAB 1: INPUT ── -->
+        <div class="tab-panel active" id="tab-input" role="tabpanel" style="width:100%;">
+          <h2 class="sectionTitle" style="margin-bottom:16px;">📋 Transcript Input</h2>
+
+          <!-- Audio upload -->
+          <div class="audio-section">
+            <label style="margin-bottom:8px; display:block; font-size:13px; color:var(--muted);">
+              Upload audio/video file to transcribe
+            </label>
+            <div style="margin-bottom:10px; font-size:12px; color:var(--muted); opacity:0.8;">
+              💡 For best results, upload audio under 2 minutes
+            </div>
+            <div class="audio-input-row">
+              <label for="audioFile" class="audio-file-label">
+                <span>📁</span>
+                <span class="filename" id="audioFilename">Choose file (.mp3, .mp4, .wav, .m4a)</span>
+              </label>
+              <input type="file" id="audioFile" class="audio-file-input"
+                accept=".mp3,.mp4,.wav,.m4a,.webm,.mpeg,.mpga,.oga,.ogg" />
+              <button type="button" id="transcribeBtn" class="audio-btn">Transcribe</button>
+            </div>
+            <div id="audioProgress" class="audio-progress" style="display:none;">
+              <div id="audioProgressBar" class="audio-progress-bar"></div>
+            </div>
+            <div id="audioError" class="audio-error" style="display:none;"></div>
+            <div id="audioLoading" class="audio-loading" style="display:none;">
+              <span>🎤 Transcribing audio... This may take a few seconds</span>
+            </div>
+          </div>
+
+          <!-- YouTube -->
+          <div class="youtube-section">
+            <label style="margin-bottom:8px; display:block; font-size:13px; color:var(--muted);">
+              Or fetch from YouTube video
+            </label>
+            <div class="youtube-input-row">
+              <input type="text" id="youtubeUrl" class="youtube-input"
+                placeholder="https://youtube.com/watch?v=..." />
+              <button type="button" id="fetchYoutubeBtn" class="youtube-btn">Fetch Transcript</button>
+            </div>
+            <div id="youtubeError" class="youtube-error" style="display:none;"></div>
+            <div id="youtubeLoading" class="youtube-loading" style="display:none;">
+              <span>Fetching transcript...</span>
+            </div>
+          </div>
+
+          <!-- Paste transcript form -->
+          <form action="/submit" method="post" class="needs-loading" style="width:100%;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <label for="transcript" style="font-size:14px; font-weight:600; color:var(--text); margin-bottom:10px; display:block; width:100%;">
+              📝 Paste the meeting transcript
+            </label>
+            <textarea id="transcript" name="transcript"
+              placeholder="Paste your meeting transcript here...&#10;&#10;Example:&#10;John: Let's ship the feature by Friday.&#10;Sarah: I'll handle the testing by Thursday."
+              maxlength="10000"
+              style="min-height: 420px; width:100%; font-size: 14px; line-height: 1.7; padding: 18px 20px; font-family: system-ui, sans-serif; box-sizing: border-box; resize: vertical;">{{ transcript }}</textarea>
+            <div class="charRow">
+              <div id="charCount" class="charCount">0 / 10000</div>
+            </div>
+            <div style="margin-top: 8px;">
+              <button type="button" id="sampleBtn" class="btnOutline" style="font-size:13px; padding:8px 14px;">
+                ✨ Try Sample Transcript
+              </button>
+            </div>
+            <div class="tab-footer">
+              <span class="muted">Supports audio upload, YouTube, or paste.</span>
+              <button class="btn" type="submit">Extract Action Items →</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ── TAB 2: RESULTS ── -->
+        <div class="tab-panel" id="tab-results" role="tabpanel">
+          <h2 class="sectionTitle" style="margin-bottom:16px;">🧠 Meeting Summary & Action Items</h2>
+
+          {% if meeting_summary %}
+            <div class="meeting-summary fade-in-result" style="margin-bottom:20px;">{{ meeting_summary }}</div>
+          {% elif transcript %}
+            <p class="muted">Submit a transcript to generate a meeting summary.</p>
+          {% else %}
+            <div class="empty-state">
+              <div class="empty-illustration">📋</div>
+              <div class="empty-title">No Meeting Yet</div>
+              <div class="empty-subtitle">Paste a transcript or try the demo to extract action items and generate insights.</div>
+              <button type="button" class="btn" onclick="document.getElementById('sampleBtn').click(); document.querySelector('.btn[type=submit]').scrollIntoView({behavior: 'smooth', block: 'center'});">
+                ✨ Try Demo
+              </button>
+            </div>
+          {% endif %}
+
+          {% if error_message %}
+            <div class="alert">{{ error_message }}</div>
+          {% elif action_items and action_items|length > 0 %}
+
+            <!-- Insight Cards -->
+            <div class="insight-cards">
+              <div class="insight-card">
+                <div class="insight-icon">📋</div>
+                <div class="insight-value">{{ action_items|length }}</div>
+                <div class="insight-label">Action Items</div>
+              </div>
+              <div class="insight-card">
+                <div class="insight-icon">👥</div>
+                <div class="insight-value">{{ action_items|selectattr('person_responsible')|map(attribute='person_responsible')|unique|list|length }}</div>
+                <div class="insight-label">People</div>
+              </div>
+              <div class="insight-card">
+                <div class="insight-icon">🔥</div>
+                <div class="insight-value">{{ high_count }}</div>
+                <div class="insight-label">High Priority</div>
+              </div>
+              <div class="insight-card">
+                <div class="insight-icon">✅</div>
+                <div class="insight-value">{{ action_items|selectattr('deadline')|list|length }}</div>
+                <div class="insight-label">With Deadlines</div>
+              </div>
+            </div>
+
+            <div style="overflow-x:auto; overflow-y:auto; max-height:480px; border-radius:16px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Action Item</th>
+                    <th>Person</th>
+                    <th>Deadline</th>
+                    <th>Priority</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in action_items %}
+                  {% set i = loop.index0 %}
+                  {% set delay = loop.index * 0.1 %}
+                  <tr class="fade-in-result" style="animation-delay: {{ delay }}s;">
+                    <td class="rowAction">{{ item.action_item or 'Unspecified' }}</td>
+                    <td>{{ item.person_responsible or 'Unspecified' }}</td>
+                    <td>{{ item.deadline or 'Unspecified' }}</td>
+                    <td>
+                      {% set priority = item.priority if item.priority else 'Low' %}
+                      {% if priority == 'High' %}<span class="priority-icon high">🔥 {{ priority }}</span>
+                      {% else %}<span class="priority-icon low">🌱 {{ priority }}</span>
+                      {% endif %}
+                    </td>
+                    <td style="min-width:180px;">
+                      <input class="emailInput" type="email" name="email_{{ i }}"
+                        placeholder="name@company.com" autocomplete="email"
+                        value="{{ emails[i] if emails|length > i else '' }}" />
+                      <input type="hidden" name="action_item_{{ i }}" value="{{ item.action_item | e }}" />
+                      <input type="hidden" name="person_responsible_{{ i }}" value="{{ item.person_responsible | e }}" />
+                      <input type="hidden" name="deadline_{{ i }}" value="{{ item.deadline | e }}" />
+                      <input type="hidden" name="priority_{{ i }}" value="{{ priority }}" />
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              </div>
+
+            <div class="tab-footer">
+              <button type="button" class="btnOutline" onclick="switchTab('tab-input')">← Back</button>
+              <button type="button" class="btn" onclick="switchTab('tab-email')">Assign & Email →</button>
+            </div>
+
+          {% else %}
+            <p class="muted" style="margin-top:8px;">
+              {% if transcript %}
+                No action items detected. Try a transcript with clearer next steps.
+              {% else %}
+                Submit a transcript on the Input tab first.
+              {% endif %}
+            </p>
+          {% endif %}
+        </div>
+
+        <!-- ── TAB 3: EMAIL & CALENDAR ── -->
+        <div class="tab-panel" id="tab-email" role="tabpanel">
+          <h2 class="sectionTitle" style="margin-bottom:16px;">Send to Assignees</h2>
+
+          {% if action_items and action_items|length > 0 %}
+          <form action="/send_emails" method="post" class="needs-loading">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input type="hidden" name="transcript" value="{{ transcript | e }}" />
+            <input type="hidden" name="action_item_count" value="{{ action_items|length }}" />
+
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+              <span style="font-size:13px; color:var(--muted); font-weight:600;">Filter:</span>
+              <button type="button" class="sort-chip active" id="sortAll" onclick="filterPriority('all')">All</button>
+              <button type="button" class="sort-chip high" id="sortHigh" onclick="filterPriority('High')">🔴 High</button>
+              <button type="button" class="sort-chip low" id="sortLow" onclick="filterPriority('Low')">🟢 Low</button>
+              <div style="width:1px; height:20px; background:var(--cardBorder); margin:0 4px;"></div>
+              <button type="button" class="sort-chip" id="sortHighFirst" onclick="sortByPriority('asc')">↑ High first</button>
+              <button type="button" class="sort-chip" id="sortLowFirst" onclick="sortByPriority('desc')">↓ Low first</button>
+            </div>
+
+            <!-- Modern Action Items Cards -->
+            <div class="action-items-header">
+              <div class="action-items-count">{{ action_items|length }} action items</div>
+              <div class="action-items-filters">
+                <button type="button" class="filter-chip active" data-filter="all" onclick="filterActionItems('all')">All</button>
+                <button type="button" class="filter-chip high" data-filter="High" onclick="filterActionItems('High')">🔥 High</button>
+                <button type="button" class="filter-chip low" data-filter="Low" onclick="filterActionItems('Low')">🌱 Low</button>
+              </div>
+              <div class="sort-dropdown">
+                <select id="sortSelect" onchange="sortActionItems(this.value)">
+                  <option value="priority-desc">Priority: High → Low</option>
+                  <option value="priority-asc">Priority: Low → High</option>
+                  <option value="deadline">Deadline</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="action-items-grid" id="actionItemsGrid">
+              {% for item in action_items %}
+              {% set i = loop.index0 %}
+              {% set priority = item.priority if item.priority else 'Low' %}
+              <div class="action-item-card" data-priority="{{ priority }}" data-index="{{ i }}">
+                <div class="action-item-header">
+                  <span class="priority-badge-modern priority-{{ priority|lower }}">
+                    {% if priority == 'High' %}🔥 High
+                    {% else %}🌱 Low{% endif %}
+                  </span>
+                  <div class="action-item-actions">
+                    <button type="button" class="icon-btn" onclick="addToGoogleCalendar({{ i }})" title="Add to Calendar">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="action-item-body">
+                  <div class="action-item-field">
+                    <label>Action Item</label>
+                    <div class="editable-field" contenteditable="true" 
+                         oninput="syncHiddenInput(this, 'action_item_{{ i }}')">{{ item.action_item or 'Unspecified' }}</div>
+                  </div>
+                  
+                  <div class="action-item-row">
+                    <div class="action-item-field half">
+                      <label>Assigned To</label>
+                      <div class="editable-field" contenteditable="true"
+                           oninput="syncHiddenInput(this, 'person_responsible_{{ i }}')">{{ item.person_responsible or '—' }}</div>
+                    </div>
+                    <div class="action-item-field half">
+                      <label>Deadline</label>
+                      <div class="editable-field" contenteditable="true"
+                           oninput="syncHiddenInput(this, 'deadline_{{ i }}')">{{ item.deadline or '—' }}</div>
+                    </div>
+                  </div>
+                  
+                  <div class="action-item-field">
+                    <label>Email</label>
+                    <input class="email-input-modern" type="email" name="email_{{ i }}"
+                           placeholder="name@company.com" autocomplete="email"
+                           value="{{ emails[i] if emails|length > i else '' }}" />
+                  </div>
+                </div>
+                
+                <input type="hidden" name="action_item_{{ i }}" value="{{ item.action_item | e }}" />
+                <input type="hidden" name="person_responsible_{{ i }}" value="{{ item.person_responsible | e }}" />
+                <input type="hidden" name="deadline_{{ i }}" value="{{ item.deadline | e }}" />
+                <input type="hidden" name="priority_{{ i }}" value="{{ priority }}" />
+              </div>
+              {% endfor %}
+            </div>
+
+            {% if success_message %}
+              <div class="alertSuccess" style="margin-top:16px;">{{ success_message }}</div>
+            {% endif %}
+
+            <div class="tab-footer">
+                <button type="button" class="btnOutline" onclick="switchTab('tab-results')">← Back</button>
+                <div class="tab-footer-right">
+                  <button class="btn" type="submit">📧 Send Emails</button>
+                  <button type="button" class="btnOutline" onclick="switchTab('tab-export')">Export →</button>
+                  <div style="font-size:11px; color:var(--textMuted); text-align:center; margin-top:6px;">Emails are sent via MeetingMind — no login required</div>
+                </div>
+              </div>
+            </form>
+
+            <script>window.MEETING_ACTION_ITEMS = {{ action_items | tojson }};</script>
+
+          {% else %}
+            <p class="muted">No action items yet. Go to the Input tab and submit a transcript first.</p>
+            <div class="tab-footer">
+              <button type="button" class="btnOutline" onclick="switchTab('tab-input')">← Go to Input</button>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- ── TAB 4: CHAT ── -->
+        <div class="tab-panel" id="tab-chat" role="tabpanel">
+          <h2 class="sectionTitle" style="margin-bottom: 8px;">💬 Meeting Chat</h2>
+          <p class="muted" style="margin-bottom: 20px; font-size: 14px;">Ask anything about your meeting transcript</p>
+
+          <!-- Chat Container -->
+          <div id="chatContainer" class="chat-container">
+            <!-- Empty State -->
+            <div id="chatEmptyState" class="chat-welcome">
+              <div class="chat-welcome-icon">💬</div>
+              <div class="chat-welcome-title">Ask anything about your meeting</div>
+              <div class="chat-welcome-subtitle">Get instant answers about decisions, action items, deadlines, and more.</div>
+              <div class="chat-suggestions">
+                <button type="button" class="chat-suggestion-chip" onclick="fillChatInput('What were the key decisions?')">What were the key decisions?</button>
+                <button type="button" class="chat-suggestion-chip" onclick="fillChatInput('Summarize the meeting')">Summarize the meeting</button>
+                <button type="button" class="chat-suggestion-chip" onclick="fillChatInput('Who is responsible for what?')">Who is responsible for what?</button>
+                <button type="button" class="chat-suggestion-chip" onclick="fillChatInput('What are the deadlines?')">What are the deadlines?</button>
+              </div>
+            </div>
+            <!-- Messages will be appended here -->
+          </div>
+
+          <!-- Loading Indicator -->
+          <div id="chatLoading" class="chat-loading" style="display: none;">
+            <div class="typing-indicator">
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+            </div>
+            <span class="chat-loading-text">AI is thinking...</span>
+          </div>
+
+          <!-- Voice Status Indicator -->
+          <div id="voiceStatus" class="voice-status" style="display: none;">
+            <div class="voice-status-icon" id="voiceStatusIcon">🎤</div>
+            <div class="voice-status-text" id="voiceStatusText">Listening...</div>
+          </div>
+
+          <!-- Error Message -->
+          <div id="chatError" class="chat-error-message" style="display: none;"></div>
+
+          <!-- Disabled State (no transcript) -->
+          <div id="chatDisabled" class="chat-disabled" {% if transcript %}style="display: none;"{% endif %}>
+            <div class="chat-disabled-icon">📝</div>
+            <div class="chat-disabled-title">Submit a transcript to start chatting</div>
+            <div class="chat-disabled-subtitle">The AI assistant needs meeting content to answer your questions.</div>
+            <button type="button" class="btn" onclick="switchTab('tab-input')" style="margin-top: 16px;">
+              Go to Input Tab
+            </button>
+          </div>
+
+          <!-- Voice Mode Toggle -->
+          <div id="voiceModeToggle" class="voice-mode-toggle" {% if not transcript %}style="display: none;"{% endif %}>
+            <label class="voice-toggle-label">
+              <input type="checkbox" id="voiceModeCheckbox" />
+              <span class="voice-toggle-slider">
+                <span class="voice-toggle-icon">🔊</span>
+              </span>
+              <span class="voice-toggle-text">Voice Mode</span>
+            </label>
+          </div>
+
+          <!-- Chat Input Area -->
+          <div id="chatInputArea" class="chat-input-area" {% if not transcript %}style="display: none;"{% endif %}>
+            <button type="button" id="voiceInputBtn" class="voice-input-btn" title="Click to speak">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+            </button>
+            <input 
+              type="text" 
+              id="chatInput" 
+              class="chat-input" 
+              placeholder="Type your question..."
+              autocomplete="off"
+            />
+            <button type="button" id="chatSendBtn" class="chat-send-btn">
+              <span>Send</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+
+          <div class="tab-footer">
+            <button type="button" class="btnOutline" onclick="switchTab('tab-email')">← Back</button>
+            <button type="button" class="btnOutline" onclick="switchTab('tab-export')">Export →</button>
+          </div>
+        </div>
+
+        <!-- ── TAB 5: EXPORT ── -->
+        <div class="tab-panel" id="tab-export" role="tabpanel">
+          <h2 class="sectionTitle" style="margin-bottom:16px;">📄 Export Your Meeting</h2>
+
+          {% if action_items and action_items|length > 0 %}
+            <!-- PDF Preview Card -->
+            <div class="pdf-preview">
+              <div class="pdf-icon">📄</div>
+              <div class="pdf-title">MeetingMind Report</div>
+              <div class="pdf-meta">{{ action_items|length }} action items • {{ transcript[:100] }}...</div>
+              <form action="/export_pdf" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type="hidden" name="transcript" value="{{ transcript | e }}" />
+                <input type="hidden" name="action_items_json" value="{{ action_items | tojson | e }}" />
+                <button class="btn" type="submit" style="width:100%; max-width:300px;">
+                  ⬇ Download PDF Report
+                </button>
+              </form>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:16px; max-width:480px;">
+
+              <div class="card" style="padding:18px;">
+                <div style="font-size:15px; font-weight:700; margin-bottom:6px;">📊 Excel File</div>
+                <div class="muted" style="margin-bottom:14px; font-size:13px;">
+                  Downloads action items as a professionally formatted Excel file.
+                </div>
+                <form action="/export_csv" method="post">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                  <input type="hidden" name="action_items_json" value="{{ action_items | tojson | e }}" />
+                  <button class="btnOutline" type="submit" style="width:100%;">⬇ Download Excel</button>
+                </form>
+              </div>
+
+            </div>
+          {% else %}
+            <div class="empty-state">
+              <div class="empty-illustration">📤</div>
+              <div class="empty-title">Nothing to Export Yet</div>
+              <div class="empty-subtitle">Submit a transcript and extract action items first to enable exports.</div>
+              <button type="button" class="btn" onclick="switchTab('tab-input')">
+                Go to Input Tab
+              </button>
+            </div>
+          {% endif %}
+
+          <div class="tab-footer">
+            <button type="button" class="btnOutline" onclick="switchTab('tab-chat')">← Back</button>
+            <span class="muted" style="font-size:13px;">All done! 🎉</span>
+          </div>
+        </div>
+
+      </div><!-- /.card -->
+    </div><!-- /.wrap -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Tab switching
+        window.switchTab = (tabId) => {
+          console.log("Switching to tab:", tabId);
+          document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+          document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+          const panel = document.getElementById(tabId);
+          if (panel) {
+            panel.classList.add("active");
+            console.log("Panel found and activated:", tabId);
+          } else {
+            console.error("Panel not found:", tabId);
+          }
+          const btn = document.querySelector(`[data-tab="${tabId}"]`);
+          if (btn) btn.classList.add("active");
+        };
+
+        document.querySelectorAll(".tab-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            switchTab(btn.dataset.tab);
+          });
+        });
+
+        // Auto-switch to results tab if action items exist on page load
+        {% if action_items and action_items|length > 0 %}
+        switchTab("tab-results");
+        {% endif %}
+
+        // Stepper update functions
+        window.updateStepper = (step) => {
+          const stepFlow = document.getElementById('stepFlow');
+          if (!stepFlow) return;
+          
+          const steps = stepFlow.querySelectorAll('.step-item');
+          steps.forEach((s, idx) => {
+            const stepNum = idx + 1;
+            s.classList.remove('active', 'completed');
+            
+            if (stepNum < step) {
+              // Previous steps are completed
+              s.classList.add('completed');
+            } else if (stepNum === step) {
+              // Current step is active
+              s.classList.add('active');
+            }
+          });
+        };
+
+        // Mark step 4 as active when export/share buttons are clicked
+        document.querySelectorAll('form[action="/export_pdf"], form[action="/export_csv"], form[action="/export_calendar"]').forEach(form => {
+          form.addEventListener('submit', () => {
+            updateStepper(4);
+          });
+        });
+
+        // Also update stepper when Send Emails form is submitted (but only on success will show step 4)
+        const emailForm = document.querySelector('form[action="/send_emails"]');
+        if (emailForm) {
+          emailForm.addEventListener('submit', () => {
+            // Small delay to let form submission process
+            setTimeout(() => updateStepper(4), 100);
+          });
+        }
+
+        window.filterPriority = (level) => {
+          const tbody = document.getElementById("emailTableBody");
+          if (!tbody) return;
+          Array.from(tbody.querySelectorAll("tr")).forEach(row => {
+            if (level === 'all') { row.style.display = ''; return; }
+            const badge = row.querySelector(".priority-badge");
+            const text = badge ? badge.textContent.trim() : "Low";
+            row.style.display = text === level ? '' : 'none';
+          });
+          ['sortAll','sortHigh','sortLow'].forEach(id => {
+            document.getElementById(id)?.classList.remove('active');
+          });
+          const map = { all:'sortAll', High:'sortHigh', Low:'sortLow' };
+          document.getElementById(map[level])?.classList.add('active');
+        };
+
+        // Modern Action Items Filter
+        window.filterActionItems = (filter) => {
+          const grid = document.getElementById('actionItemsGrid');
+          if (!grid) return;
+          
+          const cards = grid.querySelectorAll('.action-item-card');
+          const chips = document.querySelectorAll('.filter-chip');
+          
+          // Update active chip
+          chips.forEach(chip => {
+            if (chip.dataset.filter === filter) {
+              chip.classList.add('active');
+            } else {
+              chip.classList.remove('active');
+            }
+          });
+          
+          // Filter cards
+          cards.forEach(card => {
+            if (filter === 'all' || card.dataset.priority === filter) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+          
+          console.log('[Action Items] Filtered by:', filter);
+        };
+
+        // Modern Action Items Sort
+        window.sortActionItems = (sortType) => {
+          const grid = document.getElementById('actionItemsGrid');
+          if (!grid) return;
+          
+          const cards = Array.from(grid.querySelectorAll('.action-item-card'));
+          const priorityRank = { 'High': 2, 'Low': 1 };
+          
+          cards.sort((a, b) => {
+            const priorityA = a.dataset.priority;
+            const priorityB = b.dataset.priority;
+            
+            if (sortType === 'priority-desc') {
+              return priorityRank[priorityB] - priorityRank[priorityA];
+            } else if (sortType === 'priority-asc') {
+              return priorityRank[priorityA] - priorityRank[priorityB];
+            } else if (sortType === 'deadline') {
+              // Try to parse deadlines, put items without deadline at the end
+              const deadlineA = a.querySelector('.action-item-field.half:nth-child(2) .editable-field')?.textContent || '';
+              const deadlineB = b.querySelector('.action-item-field.half:nth-child(2) .editable-field')?.textContent || '';
+              
+              if (deadlineA === '—' || deadlineA === 'Unspecified') return 1;
+              if (deadlineB === '—' || deadlineB === 'Unspecified') return -1;
+              
+              // Simple string comparison for dates
+              return deadlineA.localeCompare(deadlineB);
+            }
+            return 0;
+          });
+          
+          // Re-append cards in new order
+          cards.forEach(card => grid.appendChild(card));
+          
+          console.log('[Action Items] Sorted by:', sortType);
+        };
+
+        window.sortByPriority = (direction) => {
+          const tbody = document.getElementById("emailTableBody");
+          if (!tbody) return;
+          const rank = { High: 1, Low: 2 };
+          const rows = Array.from(tbody.querySelectorAll("tr"));
+          rows.sort((a, b) => {
+            const aT = a.querySelector(".priority-badge")?.textContent?.trim() || "Low";
+            const bT = b.querySelector(".priority-badge")?.textContent?.trim() || "Low";
+            return direction === 'asc' ? (rank[aT]??2)-(rank[bT]??2) : (rank[bT]??2)-(rank[aT]??2);
+          });
+          rows.forEach(row => tbody.appendChild(row));
+          document.getElementById('sortHighFirst')?.classList.remove('active');
+          document.getElementById('sortLowFirst')?.classList.remove('active');
+          document.getElementById(direction === 'asc' ? 'sortHighFirst' : 'sortLowFirst')?.classList.add('active');
+        };
+
+        const emailTbody = document.getElementById("emailTableBody");
+        if (emailTbody && emailTbody.querySelectorAll("tr").length > 0) {
+          sortByPriority('asc');
+        }
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById("themeToggle");
+        const html = document.documentElement;
+        
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem("meetingmind-theme");
+        if (savedTheme === "light") {
+          html.classList.add("light-mode");
+        }
+        
+        // Theme toggle event
+        themeToggle.addEventListener("click", () => {
+          html.classList.toggle("light-mode");
+          const isLight = html.classList.contains("light-mode");
+          localStorage.setItem("meetingmind-theme", isLight ? "light" : "dark");
+        });
+
+        // Reset loading state for fresh page loads.
+        document.documentElement.classList.remove("is-loading");
+
+        document.querySelectorAll("form.needs-loading").forEach((form) => {
+          form.addEventListener("submit", () => {
+            document.documentElement.classList.add("is-loading");
+          });
+        });
+
+        // Transcript character counter
+        const textarea = document.getElementById("transcript");
+        const countEl = document.getElementById("charCount");
+        const maxChars = 10000;
+
+        const updateCounter = () => {
+          if (!textarea || !countEl) return;
+          const n = textarea.value.length;
+          countEl.textContent = `${n} / ${maxChars}`;
+          if (n >= Math.floor(maxChars * 0.9)) {
+            countEl.classList.add("warn");
+          } else {
+            countEl.classList.remove("warn");
+          }
+        };
+
+        if (textarea) {
+          textarea.addEventListener("input", updateCounter);
+          updateCounter();
+        }
+
+        // Sample transcript button
+        const sampleBtn = document.getElementById("sampleBtn");
+        if (sampleBtn && textarea) {
+          sampleBtn.addEventListener("click", () => {
+            textarea.value = `[Team standup — Monday 9 AM]
+
+Sarah: Good morning everyone. Let's go through updates quickly.
+
+John: Backend API is 90% done. I need to finish the auth middleware by Wednesday. 
+Sarah: Great. John, can you also write unit tests for the new endpoints before the sprint ends on Friday?
+John: Sure, I'll get that done.
+
+Priya: The new dashboard designs are ready. I'll share the Figma link with the team today.
+Sarah: Perfect. Priya, please also update the component library to match the new designs — can you finish that by next Monday?
+Priya: Yes, no problem.
+
+Mike: I found a critical bug in the payment flow. It's causing checkout failures for some users.
+Sarah: That's high priority. Mike, please fix the payment bug today and deploy a hotfix by EOD.
+Mike: On it.
+
+Sarah: One more thing — I need everyone to fill out the Q3 retrospective form by Thursday. I'll send the link over Slack.
+
+Sarah: Alright, let's wrap up. Great work everyone.`;
+            updateCounter();
+            textarea.focus();
+          });
+        }
+
+        // YouTube transcript fetcher
+        const youtubeUrlInput = document.getElementById("youtubeUrl");
+        const fetchYoutubeBtn = document.getElementById("fetchYoutubeBtn");
+        const youtubeError = document.getElementById("youtubeError");
+        const youtubeLoading = document.getElementById("youtubeLoading");
+
+        if (fetchYoutubeBtn && youtubeUrlInput) {
+          fetchYoutubeBtn.addEventListener("click", async () => {
+            const url = youtubeUrlInput.value.trim();
+            if (!url) {
+              youtubeError.textContent = "Please enter a YouTube URL";
+              youtubeError.style.display = "block";
+              return;
+            }
+
+            // Hide error and show loading
+            youtubeError.style.display = "none";
+            youtubeLoading.style.display = "flex";
+            fetchYoutubeBtn.disabled = true;
+
+            try {
+              const response = await fetch("/fetch_youtube", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url }),
+              });
+
+              const data = await response.json();
+
+              if (data.success) {
+                // Fill the transcript textarea
+                textarea.value = data.transcript;
+                updateCounter();
+                youtubeUrlInput.value = "";
+              } else {
+                youtubeError.textContent = data.error || "Failed to fetch transcript";
+                youtubeError.style.display = "block";
+              }
+            } catch (err) {
+              youtubeError.textContent = "Network error. Please try again.";
+              youtubeError.style.display = "block";
+            } finally {
+              youtubeLoading.style.display = "none";
+              fetchYoutubeBtn.disabled = false;
+            }
+          });
+        }
+
+        // Audio/Video transcription
+        const audioFileInput = document.getElementById("audioFile");
+        const audioFilename = document.getElementById("audioFilename");
+        const transcribeBtn = document.getElementById("transcribeBtn");
+        const audioError = document.getElementById("audioError");
+        const audioLoading = document.getElementById("audioLoading");
+        const audioProgress = document.getElementById("audioProgress");
+        const audioProgressBar = document.getElementById("audioProgressBar");
+
+        if (audioFileInput && audioFilename) {
+          audioFileInput.addEventListener("change", () => {
+            const file = audioFileInput.files[0];
+            if (file) {
+              // Check file size (25MB limit)
+              const maxSize = 25 * 1024 * 1024;
+              const warningSize = 10 * 1024 * 1024; // 10MB warning threshold
+              
+              if (file.size > maxSize) {
+                audioFilename.textContent = "File too large (max 25MB)";
+                audioFilename.style.color = "#ef4444";
+                audioFileInput.value = "";
+              } else {
+                audioFilename.textContent = file.name;
+                audioFilename.style.color = "";
+                audioError.style.display = "none";
+                
+                // Show warning for large files
+                if (file.size > warningSize) {
+                  audioError.textContent = "⚠️ Large files may take several minutes to transcribe.";
+                  audioError.style.display = "block";
+                  audioError.style.background = "rgba(245, 158, 11, 0.15)";
+                  audioError.style.borderColor = "rgba(245, 158, 11, 0.35)";
+                  audioError.style.color = "#fcd34d";
+                }
+              }
+            }
+          });
+        }
+
+        if (transcribeBtn && audioFileInput) {
+          transcribeBtn.addEventListener("click", async () => {
+            const file = audioFileInput.files[0];
+            if (!file) {
+              audioError.textContent = "Please select an audio/video file first";
+              audioError.style.display = "block";
+              return;
+            }
+
+            // Check file size again
+            const maxSize = 25 * 1024 * 1024;
+            if (file.size > maxSize) {
+              audioError.textContent = "File too large. Maximum size is 25MB.";
+              audioError.style.display = "block";
+              return;
+            }
+
+            // Hide error and show loading
+            audioError.style.display = "none";
+            audioLoading.style.display = "flex";
+            audioProgress.style.display = "block";
+            transcribeBtn.disabled = true;
+
+            // Simulate progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+              progress += 5;
+              if (progress > 90) progress = 90;
+              audioProgressBar.style.width = `${progress}%`;
+            }, 1000);
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+              const response = await fetch("/transcribe", {
+                method: "POST",
+                body: formData,
+              });
+
+              clearInterval(progressInterval);
+              audioProgressBar.style.width = "100%";
+
+              const data = await response.json();
+
+              if (data.success) {
+                // Fill the transcript textarea
+                textarea.value = data.transcript;
+                updateCounter();
+                audioFileInput.value = "";
+                audioFilename.textContent = "Choose file (.mp3, .mp4, .wav, .m4a)";
+                audioFilename.style.color = "";
+                
+                // Show success message
+                audioError.textContent = "✅ Transcription completed successfully!";
+                audioError.style.display = "block";
+                audioError.style.background = "rgba(34, 197, 94, 0.15)";
+                audioError.style.borderColor = "rgba(34, 197, 94, 0.35)";
+                audioError.style.color = "#86efac";
+                
+                // Highlight editable area
+                textarea.focus();
+                textarea.style.border = "2px solid #7c3aed";
+              } else {
+                audioError.textContent = data.error || "Failed to transcribe audio";
+                audioError.style.display = "block";
+              }
+            } catch (err) {
+              audioError.textContent = "Network error. Please try again.";
+              audioError.style.display = "block";
+            } finally {
+              clearInterval(progressInterval);
+              audioLoading.style.display = "none";
+              audioProgress.style.display = "none";
+              audioProgressBar.style.width = "0%";
+              transcribeBtn.disabled = false;
+            }
+          });
+        }
+
+        // ========== CHAT FEATURE ==========
+        (function initChat() {
+          const chatInput = document.getElementById("chatInput");
+          const chatSendBtn = document.getElementById("chatSendBtn");
+          const chatContainer = document.getElementById("chatContainer");
+          const chatEmptyState = document.getElementById("chatEmptyState");
+          const chatLoading = document.getElementById("chatLoading");
+          const chatError = document.getElementById("chatError");
+          const chatDisabled = document.getElementById("chatDisabled");
+          const chatInputArea = document.getElementById("chatInputArea");
+          
+          // Check if transcript exists
+          const hasTranscript = textarea && textarea.value.trim().length > 0;
+          
+          console.log("[Chat] Initialized. Transcript exists:", hasTranscript);
+          
+          // Safety check - ensure all required elements exist
+          if (!chatInput || !chatSendBtn || !chatContainer) {
+            console.error("[Chat] Required elements not found");
+            return;
+          }
+          
+          // Show/hide based on transcript availability
+          if (hasTranscript) {
+            if (chatDisabled) chatDisabled.style.display = "none";
+            if (chatInputArea) chatInputArea.style.display = "flex";
+            chatInput.disabled = false;
+            chatSendBtn.disabled = false;
+          } else {
+            if (chatDisabled) chatDisabled.style.display = "block";
+            if (chatInputArea) chatInputArea.style.display = "none";
+            chatInput.disabled = true;
+            chatSendBtn.disabled = true;
+          }
+          
+          // Helper: Add message to chat
+          function addMessage(text, isUser) {
+            // Hide empty state on first message
+            if (chatEmptyState && chatEmptyState.style.display !== "none") {
+              chatEmptyState.style.display = "none";
+            }
+            
+            const msgDiv = document.createElement("div");
+            msgDiv.className = isUser ? "chat-message-user" : "chat-message-ai";
+            
+            const bubble = document.createElement("div");
+            bubble.className = isUser ? "chat-bubble-user" : "chat-bubble-ai";
+            bubble.textContent = text;
+            
+            msgDiv.appendChild(bubble);
+            chatContainer.appendChild(msgDiv);
+            
+            // Auto-scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            console.log("[Chat] Message added:", isUser ? "User" : "AI", text.substring(0, 50));
+          }
+          
+          // ========== VOICE FEATURES ==========
+          const voiceInputBtn = document.getElementById("voiceInputBtn");
+          const voiceModeCheckbox = document.getElementById("voiceModeCheckbox");
+          const voiceStatus = document.getElementById("voiceStatus");
+          const voiceStatusIcon = document.getElementById("voiceStatusIcon");
+          const voiceStatusText = document.getElementById("voiceStatusText");
+          const voiceModeToggle = document.getElementById("voiceModeToggle");
+          
+          // Voice state
+          let isRecording = false;
+          let isVoiceModeEnabled = false;
+          let recognition = null;
+          let synthesis = window.speechSynthesis;
+          
+          // Check for Speech Recognition support
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          const hasSpeechRecognition = !!SpeechRecognition;
+          const hasSpeechSynthesis = !!synthesis;
+          
+          console.log("[Voice] Speech Recognition supported:", hasSpeechRecognition);
+          console.log("[Voice] Speech Synthesis supported:", hasSpeechSynthesis);
+          
+          // Initialize Speech Recognition
+          if (hasSpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+            
+            recognition.onstart = () => {
+              isRecording = true;
+              voiceInputBtn.classList.add("recording");
+              voiceInputBtn.title = "Recording... Click to stop";
+              showVoiceStatus("🎤", "Listening...");
+              console.log("[Voice] Recording started");
+            };
+            
+            recognition.onresult = (event) => {
+              let finalTranscript = '';
+              let interimTranscript = '';
+              
+              for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                  finalTranscript += transcript;
+                } else {
+                  interimTranscript += transcript;
+                }
+              }
+              
+              if (finalTranscript) {
+                chatInput.value = finalTranscript;
+                console.log("[Voice] Final transcript:", finalTranscript);
+              } else if (interimTranscript) {
+                chatInput.value = interimTranscript;
+              }
+            };
+            
+            recognition.onerror = (event) => {
+              console.error("[Voice] Recognition error:", event.error);
+              showError("Voice recognition error: " + event.error);
+              stopRecording();
+            };
+            
+            recognition.onend = () => {
+              console.log("[Voice] Recording ended");
+              stopRecording();
+              
+              // Auto-send if voice mode is enabled and we have text
+              if (isVoiceModeEnabled && chatInput.value.trim()) {
+                setTimeout(() => sendMessage(), 500);
+              }
+            };
+          } else {
+            // Hide voice button if not supported
+            if (voiceInputBtn) voiceInputBtn.style.display = "none";
+            console.log("[Voice] Speech recognition not supported in this browser");
+          }
+          
+          // Helper: Stop recording
+          function stopRecording() {
+            isRecording = false;
+            voiceInputBtn.classList.remove("recording");
+            voiceInputBtn.title = "Click to speak";
+            hideVoiceStatus();
+          }
+          
+          // Helper: Show voice status
+          function showVoiceStatus(icon, text) {
+            if (voiceStatus) {
+              voiceStatus.style.display = "flex";
+              voiceStatusIcon.textContent = icon;
+              voiceStatusText.textContent = text;
+            }
+          }
+          
+          // Helper: Hide voice status
+          function hideVoiceStatus() {
+            if (voiceStatus) {
+              voiceStatus.style.display = "none";
+            }
+          }
+          
+          // Helper: Speak text (TTS)
+          function speakText(text) {
+            if (!hasSpeechSynthesis || !isVoiceModeEnabled) return;
+            
+            // Cancel any ongoing speech
+            synthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+            
+            // Try to find a good voice
+            const voices = synthesis.getVoices();
+            const preferredVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google')) ||
+                                   voices.find(v => v.lang.startsWith('en') && v.name.includes('Natural')) ||
+                                   voices.find(v => v.lang.startsWith('en'));
+            if (preferredVoice) {
+              utterance.voice = preferredVoice;
+            }
+            
+            utterance.onstart = () => {
+              showVoiceStatus("🔊", "Speaking...");
+              voiceStatus.classList.add("speaking");
+              console.log("[Voice] Started speaking");
+            };
+            
+            utterance.onend = () => {
+              hideVoiceStatus();
+              voiceStatus.classList.remove("speaking");
+              console.log("[Voice] Finished speaking");
+            };
+            
+            utterance.onerror = (event) => {
+              hideVoiceStatus();
+              voiceStatus.classList.remove("speaking");
+              console.error("[Voice] Speech error:", event.error);
+            };
+            
+            synthesis.speak(utterance);
+          }
+          
+          // Toggle voice recording
+          function toggleVoiceRecording() {
+            if (!hasSpeechRecognition) {
+              showError("Voice input is not supported in your browser");
+              return;
+            }
+            
+            if (isRecording) {
+              recognition.stop();
+            } else {
+              chatInput.value = "";
+              try {
+                recognition.start();
+              } catch (err) {
+                console.error("[Voice] Failed to start recognition:", err);
+                showError("Could not start voice recording");
+              }
+            }
+          }
+          
+          // Toggle voice mode
+          function toggleVoiceMode() {
+            isVoiceModeEnabled = voiceModeCheckbox.checked;
+            console.log("[Voice] Voice mode:", isVoiceModeEnabled ? "ON" : "OFF");
+            
+            if (isVoiceModeEnabled && !hasSpeechSynthesis) {
+              showError("Voice output is not supported in your browser");
+              voiceModeCheckbox.checked = false;
+              isVoiceModeEnabled = false;
+            }
+          }
+          
+          // Modified addMessage to support TTS
+          const originalAddMessage = addMessage;
+          addMessage = function(text, isUser) {
+            originalAddMessage(text, isUser);
+            
+            // Speak AI responses if voice mode is enabled
+            if (!isUser && isVoiceModeEnabled) {
+              speakText(text);
+            }
+          };
+          
+          // Voice button event listener
+          if (voiceInputBtn) {
+            voiceInputBtn.addEventListener("click", toggleVoiceRecording);
+          }
+          
+          // Voice mode checkbox event listener
+          if (voiceModeCheckbox) {
+            voiceModeCheckbox.addEventListener("change", toggleVoiceMode);
+          }
+          
+          // Load voices when available
+          if (hasSpeechSynthesis) {
+            synthesis.onvoiceschanged = () => {
+              console.log("[Voice] Voices loaded:", synthesis.getVoices().length);
+            };
+          }
+          
+          // Show/hide voice mode toggle based on transcript
+          if (hasTranscript && voiceModeToggle) {
+            voiceModeToggle.style.display = "flex";
+          } else if (voiceModeToggle) {
+            voiceModeToggle.style.display = "none";
+          }
+          
+          // ========== END VOICE FEATURES ==========
+          
+          // Helper: Show loading state
+          function showLoading() {
+            if (chatLoading) chatLoading.style.display = "flex";
+            chatSendBtn.disabled = true;
+          }
+          
+          // Helper: Hide loading state
+          function hideLoading() {
+            if (chatLoading) chatLoading.style.display = "none";
+            if (hasTranscript) chatSendBtn.disabled = false;
+          }
+          
+          // Helper: Show error
+          function showError(message) {
+            if (chatError) {
+              chatError.textContent = message;
+              chatError.style.display = "block";
+              setTimeout(() => {
+                chatError.style.display = "none";
+              }, 5000);
+            }
+          }
+          
+          // Main: Send message
+          async function sendMessage() {
+            const message = chatInput.value.trim();
+            
+            // Validate
+            if (!message) return;
+            if (!hasTranscript) {
+              showError("Please submit a transcript first");
+              return;
+            }
+            
+            // Clear input and add user message
+            chatInput.value = "";
+            addMessage(message, true);
+            
+            // Hide any previous error
+            if (chatError) chatError.style.display = "none";
+            
+            // Show loading
+            showLoading();
+            
+            try {
+              const transcriptText = textarea ? textarea.value : "";
+              
+              const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  transcript: transcriptText,
+                  question: message
+                })
+              });
+              
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              
+              const data = await response.json();
+              
+              hideLoading();
+              
+              if (data.success) {
+                addMessage(data.answer, false);
+              } else {
+                showError(data.error || "Failed to get response");
+              }
+            } catch (err) {
+              hideLoading();
+              console.error("[Chat] Error:", err);
+              showError("Network error. Please try again.");
+            }
+          }
+          
+          // Event listeners
+          chatSendBtn.addEventListener("click", sendMessage);
+          
+          chatInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              sendMessage();
+            }
+          });
+          
+          // Global helper for suggestion chips
+          window.fillChatInput = function(text) {
+            if (chatInput && !chatInput.disabled) {
+              chatInput.value = text;
+              chatInput.focus();
+            }
+          };
+          
+          console.log("[Chat] Ready");
+        })();
+      });
+
+      // Global functions for onclick handlers
+      window.askSuggestion = (btn) => {
+        const chatInput = document.getElementById("chatInput");
+        if (chatInput) {
+          chatInput.value = btn.textContent;
+          chatInput.focus();
+        }
+      };
+
+      window.syncHiddenInput = (cell, inputName) => {
+        const input = document.querySelector(`input[name="${inputName}"]`);
+        if (input) input.value = cell.innerText.trim();
+      };
+
+      window.addToGoogleCalendar = (idx) => {
+        const items = window.MEETING_ACTION_ITEMS || [];
+        const item = items[idx];
+        if (!item) return;
+
+        const title = encodeURIComponent(item.action_item || "Action Item");
+        const person = item.person_responsible || "";
+        const priority = item.priority || "Low";
+        const deadlineRaw = item.deadline || "";
+
+        // Build description
+        const details = encodeURIComponent(
+          [
+            person ? "Assigned to: " + person : "",
+            deadlineRaw ? "Deadline: " + deadlineRaw : "",
+            "Priority: " + priority,
+            "Generated by MeetingMind",
+          ]
+            .filter(Boolean)
+            .join("\n")
+        );
+
+        // Try to parse a date from deadline text, fallback to 7 days from now
+        let startDate = null;
+        const datePatterns = [
+          { re: /(\d{4})-(\d{2})-(\d{2})/, y: 1, m: 2, d: 3 },
+          { re: /(\d{2})\/(\d{2})\/(\d{4})/, y: 3, m: 2, d: 1 },
+          { re: /(\d{1,2})\/(\d{1,2})\/(\d{4})/, y: 3, m: 1, d: 2 },
+        ];
+        for (const p of datePatterns) {
+          const match = deadlineRaw.match(p.re);
+          if (match) {
+            const year  = parseInt(match[p.y]);
+            const month = parseInt(match[p.m]) - 1;
+            const day   = parseInt(match[p.d]);
+            const d = new Date(year, month, day);
+            if (!isNaN(d.getTime())) { startDate = d; break; }
+          }
+        }
+        if (!startDate) {
+          startDate = new Date();
+          startDate.setDate(startDate.getDate() + 7);
+        }
+
+        // End date = start date + 1 day (Google Calendar all-day event format)
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + 1);
+
+        const fmt = (d) =>
+          d.getFullYear().toString() +
+          String(d.getMonth() + 1).padStart(2, "0") +
+          String(d.getDate()).padStart(2, "0");
+
+        const dates = fmt(startDate) + "/" + fmt(endDate);
+
+        const url =
+          "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+          "&text=" + title +
+          "&details=" + details +
+          "&dates=" + dates;
+
+        window.open(url, "_blank");
+      };
+    </script>
+  </body>
+</html>
