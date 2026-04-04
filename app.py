@@ -9,7 +9,9 @@ from datetime import datetime, timezone, timedelta
 
 import requests
 from dotenv import load_dotenv
-import resend
+import smtplib
+import ssl
+from email.message import EmailMessage
 
 from youtube_transcript_api import YouTubeTranscriptApi
 
@@ -66,8 +68,8 @@ def _is_valid_email(value: str) -> bool:
     value = value.strip()
     if not value:
         return False
-    # Simple email validation. We intentionally keep it permissive.
-    return re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", value) is not None
+    # Accept all standard email formats including .ac.in, .co.in etc
+    return re.match(r"^[^@\s]+@[^@\s]+\.[^@\s.]+(\.[^@\s.]+)*$", value) is not None
 
 
 def _build_email_body(person_responsible: str, action_item: str, deadline: str, priority: str = "Low") -> str:
@@ -133,44 +135,46 @@ MeetingMind
 
 
 def send_action_item_emails(action_items: list[dict], emails: list[str]) -> tuple[int, int]:
-    api_key = os.getenv("RESEND_API_KEY")
-    if not api_key:
-        raise RuntimeError("RESEND_API_KEY is missing from .env file.")
+    sender_email = os.getenv("SENDER_EMAIL", "").strip()
+    sender_app_password = os.getenv("SENDER_APP_PASSWORD", "").strip()
     
-    # Credentials used only for this request, never persisted
-    resend.api_key = api_key
-    
+    if not sender_email or not sender_app_password:
+        raise RuntimeError("SENDER_EMAIL or SENDER_APP_PASSWORD is missing from .env file.")
+
     to_pairs = []
     for idx, item in enumerate(action_items):
         email = (emails[idx] if idx < len(emails) else "").strip()
         if email and _is_valid_email(email):
             to_pairs.append((email, item))
-    
+
     sent_count = 0
     skipped_count = len(action_items) - len(to_pairs)
-    
+
     if not to_pairs:
         return 0, skipped_count
-    
-    for to_email, item in to_pairs:
-        body = _build_email_body(
-            person_responsible=str(item.get("person_responsible", "")),
-            action_item=str(item.get("action_item", "")),
-            deadline=str(item.get("deadline", "")),
-            priority=str(item.get("priority", "Low")),
-        )
-        try:
-            resend.Emails.send({
-                "from": "MeetingMind <onboarding@resend.dev>",
-                "to": to_email,
-                "subject": "Action item assigned to you — MeetingMind",
-                "text": body,
-            })
+
+    subject = "Action item assigned to you — MeetingMind"
+    context = ssl.create_default_context()
+
+    # Credentials used only for this request, never persisted
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+        server.login(sender_email, sender_app_password)
+        for to_email, item in to_pairs:
+            msg = EmailMessage()
+            msg["From"] = f"MeetingMind <{sender_email}>"
+            msg["To"] = to_email
+            msg["Subject"] = subject
+            msg.set_content(
+                _build_email_body(
+                    person_responsible=str(item.get("person_responsible", "")),
+                    action_item=str(item.get("action_item", "")),
+                    deadline=str(item.get("deadline", "")),
+                    priority=str(item.get("priority", "Medium")),
+                )
+            )
+            server.send_message(msg)
             sent_count += 1
-        except Exception as e:
-            print(f"Resend error for {to_email}: {e}")
-            skipped_count += 1
-    
+
     return sent_count, skipped_count
 
 
