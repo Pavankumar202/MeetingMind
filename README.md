@@ -7,6 +7,13 @@
 ![Groq](https://img.shields.io/badge/Groq-LLaMA%203.3%2070B-orange?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
+## 🌐 Live Demo
+
+🚀 **Try it live:** https://meetingmind-jxb3.onrender.com
+
+> Note: First load may take 30-50 seconds as the 
+> free server wakes up. Please be patient!
+
 ---
 
 ## 🚀 What is MeetingMind?
