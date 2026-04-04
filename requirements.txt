@@ -7,3 +7,5 @@ resend
 gunicorn
 youtube-transcript-api
 flask-wtf
+groq
+Pillow
