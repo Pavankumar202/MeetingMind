@@ -1,5 +1,4 @@
 import io
-import whisper
 from flask import Flask, render_template, request, send_file, session, jsonify
 
 import json
@@ -21,16 +20,7 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, Tabl
 from html import escape as html_escape
 from flask_wtf.csrf import CSRFProtect
 
-
-# Lazy-loaded Whisper model (loads once on first use)
-_whisper_model = None
-
-def get_whisper_model():
-    global _whisper_model
-    if _whisper_model is None:
-        _whisper_model = whisper.load_model("tiny.en")
-    return _whisper_model
-
+from groq import Groq
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-meetingmind-secret-key")
@@ -820,7 +810,6 @@ def fetch_youtube():
 
 @app.post("/transcribe")
 def transcribe():
-    """Transcribe audio/video file using local OpenAI Whisper model."""
     if "file" not in request.files:
         return jsonify({"success": False, "error": "No file provided"}), 400
     
@@ -828,35 +817,42 @@ def transcribe():
     if not file or file.filename == "":
         return jsonify({"success": False, "error": "No file selected"}), 400
     
-    # Check file extension
     allowed_extensions = {".mp3", ".mp4", ".wav", ".m4a"}
     file_ext = os.path.splitext(file.filename)[1].lower()
     if file_ext not in allowed_extensions:
         return jsonify({"success": False, "error": f"Unsupported file format. Allowed: {', '.join(allowed_extensions)}"}), 400
     
-    # Save to temp file
-    import tempfile
-    with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as tmp_file:
-        tmp_file.write(file.read())
-        tmp_path = tmp_file.name
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        return jsonify({"success": False, "error": "GROQ_API_KEY is missing from .env file."}), 500
     
+    import tempfile
+    tmp_path = None
     try:
-        # Load whisper model and transcribe
-        model = get_whisper_model()
-        result = model.transcribe(tmp_path)
-        transcript = result["text"]
+        with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as tmp_file:
+            tmp_file.write(file.read())
+            tmp_path = tmp_file.name
         
-        # Clean up temp file
-        os.unlink(tmp_path)
+        client = Groq(api_key=api_key)
         
-        if not transcript:
+        with open(tmp_path, "rb") as audio_file:
+            transcription = client.audio.transcriptions.create(
+                file=(file.filename, audio_file.read()),
+                model="whisper-large-v3",
+                response_format="text",
+                language="en",
+            )
+        
+        if tmp_path and os.path.exists(tmp_path):
+            os.unlink(tmp_path)
+        
+        if not transcription:
             return jsonify({"success": False, "error": "No transcription returned"}), 500
         
-        return jsonify({"success": True, "transcript": transcript})
+        return jsonify({"success": True, "transcript": transcription})
     
     except Exception as e:
-        # Clean up temp file on error
-        if os.path.exists(tmp_path):
+        if tmp_path and os.path.exists(tmp_path):
             os.unlink(tmp_path)
         return jsonify({"success": False, "error": f"Transcription error: {str(e)}"}), 500
 
