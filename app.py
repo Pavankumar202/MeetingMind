@@ -153,7 +153,7 @@ def send_action_item_emails(action_items: list[dict], emails: list[str]) -> tupl
     context = ssl.create_default_context()
 
     # Credentials used only for this request, never persisted
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context, timeout=10) as server:
         server.login(sender_email, sender_app_password)
         for to_email, item in to_pairs:
             msg = EmailMessage()
