@@ -151,9 +151,10 @@ def send_action_item_emails(action_items: list[dict], emails: list[str]) -> tupl
 
     subject = "Action item assigned to you — MeetingMind"
     context = ssl.create_default_context()
-
-    # Credentials used only for this request, never persisted
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context, timeout=10) as server:
+    with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as server:
+        server.ehlo()
+        server.starttls(context=context)
+        server.ehlo()
         server.login(sender_email, sender_app_password)
         for to_email, item in to_pairs:
             msg = EmailMessage()
