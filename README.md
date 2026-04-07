@@ -22,7 +22,7 @@ MeetingMind is an AI-powered meeting assistant that eliminates the most
 painful part of every meeting — manually tracking who needs to do what, 
 by when, and following up with everyone.
 
-Paste any meeting transcript (or upload audio, or drop a YouTube link) 
+Paste any meeting transcript (or upload audio, or record live in your browser) 
 and MeetingMind instantly:
 - Extracts every action item
 - Assigns it to the right person
@@ -38,9 +38,9 @@ and MeetingMind instantly:
 |---|---|
 | 🤖 AI Action Item Extraction | Extracts who does what by when using LLaMA 3.3 70B |
 | 📊 Meeting Summary | Auto-generates a concise 2-3 sentence summary |
-| 🎙️ Audio Transcription | Upload mp3/mp4/wav/m4a — transcribed via Groq Whisper API in seconds |
-| 📺 YouTube Integration | Paste a YouTube URL to fetch transcript automatically |
-| 📧 Email Assignees | Send action items to assignees via Resend — no login needed |
+| 🎙️ Audio Transcription | Upload audio/video files up to 1GB — ffmpeg compresses to mono MP3 at 16kHz, then Groq Whisper transcribes in seconds |
+| 🎙️ Live Meeting Recording | Record directly in the browser using your microphone — real-time transcription with pause/resume, multi-language support, and live waveform. Powered by Web Speech API. Works best on Chrome and Edge. |
+| 📧 Email Assignees | Send action items to assignees via Gmail SMTP with Google Calendar links |
 | 📅 Calendar Export | Download .ics file for Google Calendar, Outlook, Apple Calendar |
 | 📄 PDF Export | Professional branded PDF report with summary and action items |
 | 📊 Excel Export | Color-coded Excel file with priority highlighting |
@@ -56,11 +56,12 @@ and MeetingMind instantly:
 |---|---|
 | Backend | Flask (Python) |
 | AI Extraction & Chat | Groq API — LLaMA 3.3 70B |
-| Audio Transcription | Groq Whisper API (whisper-large-v3) |
-| Email Delivery | Resend API |
+| Audio Transcription | Groq Whisper API (whisper-large-v3) with ffmpeg compression |
+| Audio Processing | ffmpeg (extract audio, convert to mono MP3 at 16kHz) |
+| Email Delivery | Gmail SMTP (smtplib) |
 | PDF Generation | ReportLab |
 | Excel Generation | OpenPyXL |
-| YouTube Transcripts | youtube-transcript-api |
+| Live Recording | Web Speech API (built-in browser API — no install needed) |
 | Frontend | HTML + CSS + Vanilla JavaScript |
 
 ---
@@ -69,8 +70,13 @@ and MeetingMind instantly:
 
 ### Prerequisites
 - Python 3.10+
+- **ffmpeg** installed and available in PATH (required for audio/video transcription)
+  - Windows: `choco install ffmpeg` or download from [ffmpeg.org](https://ffmpeg.org/download.html)
+  - Mac: `brew install ffmpeg`
+  - Linux: `sudo apt install ffmpeg`
 - A Groq API key (free at https://console.groq.com)
-- A Resend API key (free at https://resend.com)
+- A Gmail account with App Password enabled 
+  (Google Account → Security → 2FA → App Passwords)
 
 ### 1. Clone the repository
 ```bash
@@ -101,7 +107,8 @@ pip install -r requirements.txt
 Create a `.env` file in the project root:
 ```
 GROQ_API_KEY=your_groq_api_key_here
-RESEND_API_KEY=your_resend_api_key_here
+SENDER_EMAIL=your_gmail@gmail.com
+SENDER_APP_PASSWORD=your_16_char_app_password
 ```
 
 ### 5. Run the application
@@ -117,8 +124,8 @@ Then open `http://127.0.0.1:5000/` in your browser.
 
 1. **Input your meeting**
    - Paste a transcript directly
-   - Upload an audio/video file (Groq Whisper API will transcribe it in seconds)
-   - Drop a YouTube URL to fetch the transcript
+   - Upload an audio/video file up to 1GB (ffmpeg automatically compresses to mono MP3 at 16kHz for faster transcription)
+   - Record live in the browser using your microphone (Chrome/Edge recommended)
 
 2. **Extract insights**
    - Click **Submit** to generate action items and meeting summary
@@ -160,11 +167,35 @@ Then open `http://127.0.0.1:5000/` in your browser.
 | Variable | Required | Description |
 |---|---|---|
 | `GROQ_API_KEY` | Yes | API key for LLaMA 3.3 70B and Whisper transcription (get at [console.groq.com](https://console.groq.com)) |
-| `RESEND_API_KEY` | Yes | API key for email delivery (get at [resend.com](https://resend.com)) |
+| `SENDER_EMAIL` | Yes | Gmail address used to send emails |
+| `SENDER_APP_PASSWORD` | Yes | Gmail App Password (not your regular Gmail password). Generate at: Google Account → Security → 2FA → App Passwords |
 
 ---
 
-## 🛡️ License
+## 🐛 Bug Fixes / Changelog
+
+### v1.3 (Latest)
+- **Replaced YouTube URL input with Live Meeting Recording** — 
+  Users can now record directly in the browser using the Web Speech API.
+  Supports pause/resume, live waveform, timestamps, and multi-language 
+  transcription. No API key or extension required.
+- **Removed youtube-transcript-api dependency** — No longer needed.
+
+### v1.2
+- **Added ffmpeg audio compression** — Before sending to Groq Whisper, files are compressed to mono MP3 at 16kHz (reduces 72MB video to under 5MB)
+- **Increased file size limit to 1GB** — Backend now accepts files up to 1GB (compressed before transcription)
+- **Removed AssemblyAI** — Switched back to Groq Whisper with ffmpeg preprocessing for better reliability
+- **Added ffmpeg-python to requirements** — For audio processing capabilities
+
+### v1.1
+- **Fixed calendar events appearing on wrong dates** — AI now receives today's date in the prompt and returns all deadlines as ISO format (YYYY-MM-DD) instead of vague text like "Wednesday" or "next Friday"
+- **Switched to Gmail SMTP for email delivery** — More reliable delivery and better spam folder avoidance
+- **Fixed iCal zero-duration events** — DTEND is now correctly set to deadline date + 1 day (per iCal spec for all-day events)
+- **Fixed ambiguous date format parsing** — Removed dd/mm vs mm/dd conflict by standardizing on ISO format
+
+---
+
+## �️ License
 
 MIT License — feel free to use for personal or commercial projects.
 
@@ -173,8 +204,8 @@ MIT License — feel free to use for personal or commercial projects.
 ## 🙏 Acknowledgments
 
 - [Groq](https://groq.com) for blazing-fast LLaMA inference
-- [Resend](https://resend.com) for simple email delivery
 - [Groq Whisper API](https://console.groq.com) — Ultra-fast cloud audio transcription
+- [ffmpeg](https://ffmpeg.org/) for audio/video processing
 - [ReportLab](https://www.reportlab.com/) for PDF generation
 
 ---

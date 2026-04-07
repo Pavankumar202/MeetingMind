@@ -1126,26 +1126,41 @@
         width: 0%;
       }
 
-      .youtube-section {
+      .live-recording-section {
         margin-bottom: 20px;
         padding: 16px;
         background: rgba(124, 58, 237, 0.1);
         border: 1px solid rgba(124, 58, 237, 0.3);
         border-radius: 12px;
+        position: relative;
+        overflow: hidden;
       }
 
-      :root.light-mode .youtube-section {
+      .live-recording-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+        animation: shimmer 6s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      :root.light-mode .live-recording-section {
         background: #ede9fe;
         border-color: #ddd6fe;
       }
 
-      .youtube-input-row {
+      .recording-language-row {
         display: flex;
         gap: 10px;
         align-items: center;
+        margin-bottom: 12px;
       }
 
-      .youtube-input {
+      .recording-language-select {
         flex: 1;
         border-radius: 10px;
         border: 1px solid rgba(148, 163, 184, 0.25);
@@ -1154,25 +1169,87 @@
         padding: 10px 12px;
         font-size: 14px;
         outline: none;
+        cursor: pointer;
         transition: border-color 120ms ease, box-shadow 120ms ease;
       }
 
-      :root.light-mode .youtube-input {
+      .recording-language-select:focus {
+        border-color: rgba(96, 165, 250, 0.7);
+        box-shadow: 0 0 0 4px var(--ring);
+      }
+
+      .recording-language-select:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      :root.light-mode .recording-language-select {
         background: #ffffff;
         border-color: #ddd6fe;
         color: #1e1b4b;
       }
 
-      :root.light-mode .youtube-input::placeholder {
-        color: #7c3aed;
+      .recording-status-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
       }
 
-      .youtube-input:focus {
-        border-color: rgba(96, 165, 250, 0.7);
-        box-shadow: 0 0 0 4px var(--ring);
+      .recording-status-badge.ready {
+        background: rgba(34, 197, 94, 0.15);
+        border: 1px solid rgba(34, 197, 94, 0.35);
+        color: #86efac;
       }
 
-      .youtube-btn {
+      .recording-status-badge.live {
+        background: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.5);
+        color: #fca5a5;
+        animation: pulseBadge 1.5s ease-in-out infinite;
+      }
+
+      .recording-status-badge.paused {
+        background: rgba(245, 158, 11, 0.15);
+        border: 1px solid rgba(245, 158, 11, 0.4);
+        color: #fcd34d;
+      }
+
+      @keyframes pulseBadge {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+
+      :root.light-mode .recording-status-badge.ready {
+        background: rgba(34, 197, 94, 0.1);
+        color: #16a34a;
+        border-color: rgba(34, 197, 94, 0.3);
+      }
+
+      :root.light-mode .recording-status-badge.live {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border-color: rgba(239, 68, 68, 0.3);
+      }
+
+      :root.light-mode .recording-status-badge.paused {
+        background: rgba(245, 158, 11, 0.1);
+        color: #d97706;
+        border-color: rgba(245, 158, 11, 0.3);
+      }
+
+      .recording-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+
+      .recording-btn {
         appearance: none;
         border: 0;
         cursor: pointer;
@@ -1181,22 +1258,147 @@
         border-radius: 10px;
         padding: 10px 16px;
         font-size: 13px;
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        transition: transform 120ms ease, filter 120ms ease;
+        transition: transform 120ms ease, filter 120ms ease, box-shadow 0.2s ease;
         white-space: nowrap;
+        position: relative;
+        overflow: hidden;
       }
 
-      .youtube-btn:hover {
+      .recording-btn.start {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+      }
+
+      .recording-btn.start:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+      }
+
+      .recording-btn.pause {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+      }
+
+      .recording-btn.pause:hover {
         transform: translateY(-1px);
         filter: brightness(1.05);
       }
 
-      .youtube-btn:disabled {
+      .recording-btn.done {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+      }
+
+      .recording-btn.done:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+
+      .recording-btn.use-transcript {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        width: 100%;
+        margin-top: 12px;
+      }
+
+      .recording-btn.use-transcript:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+
+      .recording-btn:disabled {
         cursor: not-allowed;
         opacity: 0.7;
       }
 
-      .youtube-error {
+      .recording-timer {
+        font-family: 'Courier New', monospace;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text);
+        background: rgba(2, 6, 23, 0.5);
+        padding: 8px 14px;
+        border-radius: 8px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        min-width: 70px;
+        text-align: center;
+      }
+
+      :root.light-mode .recording-timer {
+        background: #f5f3ff;
+        border-color: #ddd6fe;
+        color: #1e1b4b;
+      }
+
+      .recording-waveform {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        height: 30px;
+        margin-left: auto;
+      }
+
+      .waveform-bar {
+        width: 4px;
+        background: linear-gradient(180deg, #ef4444, #dc2626);
+        border-radius: 2px;
+        animation: waveform 0.5s ease-in-out infinite alternate;
+      }
+
+      .waveform-bar:nth-child(1) { height: 8px; animation-delay: 0s; }
+      .waveform-bar:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+      .waveform-bar:nth-child(3) { height: 24px; animation-delay: 0.2s; }
+      .waveform-bar:nth-child(4) { height: 16px; animation-delay: 0.3s; }
+      .waveform-bar:nth-child(5) { height: 8px; animation-delay: 0.4s; }
+
+      @keyframes waveform {
+        0% { transform: scaleY(0.3); opacity: 0.5; }
+        100% { transform: scaleY(1); opacity: 1; }
+      }
+
+      .live-transcript-box {
+        max-height: 200px;
+        overflow-y: auto;
+        background: rgba(2, 6, 23, 0.4);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 12px;
+      }
+
+      :root.light-mode .live-transcript-box {
+        background: #ffffff;
+        border-color: #ddd6fe;
+      }
+
+      .live-transcript-content {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--text);
+      }
+
+      .transcript-entry {
+        margin-bottom: 8px;
+        display: flex;
+        gap: 8px;
+      }
+
+      .transcript-timestamp {
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        color: var(--muted);
+        flex-shrink: 0;
+        min-width: 45px;
+      }
+
+      .transcript-text {
+        flex: 1;
+      }
+
+      .transcript-text.interim {
+        font-style: italic;
+        opacity: 0.7;
+      }
+
+      .recording-error {
         margin-top: 10px;
         padding: 10px 12px;
         background: rgba(239, 68, 68, 0.15);
@@ -1206,19 +1408,18 @@
         font-size: 13px;
       }
 
-      :root.light-mode .youtube-error {
+      :root.light-mode .recording-error {
         background: rgba(239, 68, 68, 0.1);
         color: #dc2626;
         border-color: rgba(239, 68, 68, 0.25);
       }
 
-      .youtube-loading {
-        margin-top: 10px;
-        font-size: 13px;
+      .recording-browser-note {
+        margin-top: 8px;
+        font-size: 11px;
         color: var(--muted);
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        text-align: center;
+        opacity: 0.8;
       }
 
       .chip-suggestion {
@@ -1487,23 +1688,23 @@
       }
 
       /* Enhanced input fields */
-      .emailInput, .chat-input, .youtube-input {
+      .emailInput, .chat-input, .recording-language-select {
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       }
 
-      .emailInput:focus, .chat-input:focus, .youtube-input:focus {
+      .emailInput:focus, .chat-input:focus, .recording-language-select:focus {
         box-shadow:
           0 0 0 4px var(--ring),
           0 0 15px rgba(96, 165, 250, 0.25);
       }
 
-      /* Audio and YouTube section enhancements */
-      .audio-section, .youtube-section {
+      /* Audio and Live Recording section enhancements */
+      .audio-section, .live-recording-section {
         position: relative;
         overflow: hidden;
       }
 
-      .audio-section::before, .youtube-section::before {
+      .audio-section::before, .live-recording-section::before {
         content: '';
         position: absolute;
         top: -50%;
@@ -2232,7 +2433,7 @@
       }
 
       /* Button Micro-interactions */
-      .btn, .btnOutline, .chat-btn, .audio-btn, .youtube-btn {
+      .btn, .btnOutline, .chat-btn, .audio-btn, .recording-btn {
         position: relative;
         overflow: hidden;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -3363,7 +3564,7 @@
           <div class="feature-card">
             <div class="feature-icon">📧</div>
             <h3 class="feature-title">Instant Emails</h3>
-            <p class="feature-desc">Send action items directly to assignees via Resend — no email login required</p>
+            <p class="feature-desc">Send action items directly to assignees via Gmail with one-click Google Calendar links</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon">📅</div>
@@ -3385,16 +3586,16 @@
         
         <div class="trust-grid" style="margin-top: 40px;">
           <div class="trust-stat">
-            <span class="trust-number">10s</span>
-            <span class="trust-label">Average processing time</span>
+            <span class="trust-number">~15s</span>
+            <span class="trust-label">Avg processing time</span>
           </div>
           <div class="trust-stat">
-            <span class="trust-number">3x</span>
-            <span class="trust-label">Faster than manual notes</span>
+            <span class="trust-number">100%</span>
+            <span class="trust-label">Automated note-taking</span>
           </div>
           <div class="trust-stat">
-            <span class="trust-number">5</span>
-            <span class="trust-label">Export formats supported</span>
+            <span class="trust-number">4</span>
+            <span class="trust-label">Export formats</span>
           </div>
           <div class="trust-stat">
             <span class="trust-number">0</span>
@@ -3514,7 +3715,7 @@
               Upload audio/video file to transcribe
             </label>
             <div style="margin-bottom:10px; font-size:12px; color:var(--muted); opacity:0.8;">
-              💡 For best results, upload audio under 2 minutes
+              💡 Supports audio and video files up to 1GB
             </div>
             <div class="audio-input-row">
               <label for="audioFile" class="audio-file-label">
@@ -3534,20 +3735,62 @@
             </div>
           </div>
 
-          <!-- YouTube -->
-          <div class="youtube-section">
+          <!-- Live Meeting Recording -->
+          <div class="live-recording-section">
             <label style="margin-bottom:8px; display:block; font-size:13px; color:var(--muted);">
-              Or fetch from YouTube video
+              🎙️ Or record live
             </label>
-            <div class="youtube-input-row">
-              <input type="text" id="youtubeUrl" class="youtube-input"
-                placeholder="https://youtube.com/watch?v=..." />
-              <button type="button" id="fetchYoutubeBtn" class="youtube-btn">Fetch Transcript</button>
+            
+            <!-- Language Selector -->
+            <div class="recording-language-row">
+              <select id="recordingLanguage" class="recording-language-select">
+                <option value="en-US">English (US)</option>
+                <option value="en-GB">English (UK)</option>
+                <option value="hi-IN">Hindi</option>
+                <option value="es-ES">Spanish</option>
+                <option value="fr-FR">French</option>
+                <option value="de-DE">German</option>
+                <option value="ja-JP">Japanese</option>
+              </select>
+              
+              <!-- Status Badge -->
+              <span id="recordingStatus" class="recording-status-badge ready">Ready</span>
             </div>
-            <div id="youtubeError" class="youtube-error" style="display:none;"></div>
-            <div id="youtubeLoading" class="youtube-loading" style="display:none;">
-              <span>Fetching transcript...</span>
+            
+            <!-- Recording Controls -->
+            <div class="recording-controls">
+              <button type="button" id="startRecordingBtn" class="recording-btn start">Start Recording</button>
+              <button type="button" id="pauseResumeBtn" class="recording-btn pause" style="display:none;">Pause</button>
+              <button type="button" id="doneRecordingBtn" class="recording-btn done" style="display:none;">Done</button>
+              
+              <!-- Timer Display -->
+              <div id="recordingTimer" class="recording-timer" style="display:none;">00:00</div>
+              
+              <!-- Animated Waveform -->
+              <div id="recordingWaveform" class="recording-waveform" style="display:none;">
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+              </div>
             </div>
+            
+            <!-- Real-time Transcript Box -->
+            <div id="liveTranscriptBox" class="live-transcript-box" style="display:none;">
+              <div id="liveTranscriptContent" class="live-transcript-content"></div>
+            </div>
+            
+            <!-- Use Transcript Button -->
+            <button type="button" id="useTranscriptBtn" class="recording-btn use-transcript" style="display:none;">
+              Use This Transcript →
+            </button>
+            
+            <!-- Error Message -->
+            <div id="recordingError" class="recording-error" style="display:none;"></div>
+            
+            <!-- Browser Note -->
+            <div class="recording-browser-note">Works best on Chrome or Edge</div>
           </div>
 
           <!-- Paste transcript form -->
@@ -3677,16 +3920,6 @@
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <input type="hidden" name="transcript" value="{{ transcript | e }}" />
             <input type="hidden" name="action_item_count" value="{{ action_items|length }}" />
-
-            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
-              <span style="font-size:13px; color:var(--muted); font-weight:600;">Filter:</span>
-              <button type="button" class="sort-chip active" id="sortAll" onclick="filterPriority('all')">All</button>
-              <button type="button" class="sort-chip high" id="sortHigh" onclick="filterPriority('High')">🔴 High</button>
-              <button type="button" class="sort-chip low" id="sortLow" onclick="filterPriority('Low')">🟢 Low</button>
-              <div style="width:1px; height:20px; background:var(--cardBorder); margin:0 4px;"></div>
-              <button type="button" class="sort-chip" id="sortHighFirst" onclick="sortByPriority('asc')">↑ High first</button>
-              <button type="button" class="sort-chip" id="sortLowFirst" onclick="sortByPriority('desc')">↓ Low first</button>
-            </div>
 
             <!-- Modern Action Items Cards -->
             <div class="action-items-header">
@@ -4188,52 +4421,313 @@ Sarah: Alright, let's wrap up. Great work everyone.`;
           });
         }
 
-        // YouTube transcript fetcher
-        const youtubeUrlInput = document.getElementById("youtubeUrl");
-        const fetchYoutubeBtn = document.getElementById("fetchYoutubeBtn");
-        const youtubeError = document.getElementById("youtubeError");
-        const youtubeLoading = document.getElementById("youtubeLoading");
+        // Live Meeting Recording with Web Speech API
+        const startRecordingBtn = document.getElementById("startRecordingBtn");
+        const pauseResumeBtn = document.getElementById("pauseResumeBtn");
+        const doneRecordingBtn = document.getElementById("doneRecordingBtn");
+        const useTranscriptBtn = document.getElementById("useTranscriptBtn");
+        const recordingLanguage = document.getElementById("recordingLanguage");
+        const recordingStatus = document.getElementById("recordingStatus");
+        const recordingTimer = document.getElementById("recordingTimer");
+        const recordingWaveform = document.getElementById("recordingWaveform");
+        const liveTranscriptBox = document.getElementById("liveTranscriptBox");
+        const liveTranscriptContent = document.getElementById("liveTranscriptContent");
+        const recordingError = document.getElementById("recordingError");
 
-        if (fetchYoutubeBtn && youtubeUrlInput) {
-          fetchYoutubeBtn.addEventListener("click", async () => {
-            const url = youtubeUrlInput.value.trim();
-            if (!url) {
-              youtubeError.textContent = "Please enter a YouTube URL";
-              youtubeError.style.display = "block";
+        // Web Speech API setup
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+        let isRecording = false;
+        let isPaused = false;
+        let recordingStartTime = null;
+        let recordingElapsed = 0;
+        let timerInterval = null;
+        let finalTranscript = "";
+        let interimTranscript = "";
+
+        // Initialize Speech Recognition
+        if (SpeechRecognition) {
+          recognition = new SpeechRecognition();
+          recognition.continuous = true;
+          recognition.interimResults = true;
+          recognition.lang = recordingLanguage.value;
+
+          recognition.onstart = () => {
+            isRecording = true;
+            isPaused = false;
+            updateStatus("live");
+            recordingWaveform.style.display = "flex";
+            recordingLanguage.disabled = true;
+            console.log("[Live Recording] Started");
+          };
+
+          recognition.onresult = (event) => {
+            interimTranscript = "";
+            
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+              const transcript = event.results[i][0].transcript;
+              if (event.results[i].isFinal) {
+                const timestamp = formatTimestamp(recordingElapsed);
+                addTranscriptEntry(timestamp, transcript, false);
+                finalTranscript += transcript + " ";
+                interimTranscript = "";
+              } else {
+                interimTranscript = transcript;
+                // Update interim display
+                updateInterimDisplay(interimTranscript);
+              }
+            }
+          };
+
+          recognition.onerror = (event) => {
+            console.error("[Live Recording] Error:", event.error);
+            if (event.error === "not-allowed") {
+              showRecordingError("Microphone access denied. Please allow microphone permissions.");
+            } else if (event.error === "no-speech") {
+              // Auto-restart on no-speech error
+              if (isRecording && !isPaused) {
+                setTimeout(() => {
+                  try { recognition.start(); } catch(e) {}
+                }, 100);
+              }
+            } else {
+              showRecordingError("Recording error: " + event.error);
+            }
+          };
+
+          recognition.onend = () => {
+            console.log("[Live Recording] Ended");
+            // Auto-restart if still recording and not paused
+            if (isRecording && !isPaused) {
+              setTimeout(() => {
+                try { recognition.start(); } catch(e) {}
+              }, 100);
+            }
+          };
+        } else {
+          // Speech API not supported
+          if (startRecordingBtn) {
+            startRecordingBtn.disabled = true;
+            startRecordingBtn.textContent = "Not Supported";
+          }
+          showRecordingError("Speech recognition is not supported in this browser. Works best on Chrome or Edge.");
+        }
+
+        // Update language when changed
+        if (recordingLanguage && recognition) {
+          recordingLanguage.addEventListener("change", () => {
+            recognition.lang = recordingLanguage.value;
+          });
+        }
+
+        // Start Recording
+        if (startRecordingBtn) {
+          startRecordingBtn.addEventListener("click", () => {
+            if (!SpeechRecognition) {
+              showRecordingError("Speech recognition is not supported in this browser.");
               return;
             }
 
-            // Hide error and show loading
-            youtubeError.style.display = "none";
-            youtubeLoading.style.display = "flex";
-            fetchYoutubeBtn.disabled = true;
+            // Reset state
+            finalTranscript = "";
+            interimTranscript = "";
+            recordingElapsed = 0;
+            liveTranscriptContent.innerHTML = "";
+            liveTranscriptBox.style.display = "block";
+            recordingError.style.display = "none";
+            useTranscriptBtn.style.display = "none";
 
+            // Show recording controls
+            startRecordingBtn.style.display = "none";
+            pauseResumeBtn.style.display = "inline-block";
+            doneRecordingBtn.style.display = "inline-block";
+            recordingTimer.style.display = "block";
+
+            // Start timer
+            recordingStartTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+
+            // Start recognition
             try {
-              const response = await fetch("/fetch_youtube", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url }),
-              });
-
-              const data = await response.json();
-
-              if (data.success) {
-                // Fill the transcript textarea
-                textarea.value = data.transcript;
-                updateCounter();
-                youtubeUrlInput.value = "";
-              } else {
-                youtubeError.textContent = data.error || "Failed to fetch transcript";
-                youtubeError.style.display = "block";
-              }
+              recognition.start();
             } catch (err) {
-              youtubeError.textContent = "Network error. Please try again.";
-              youtubeError.style.display = "block";
-            } finally {
-              youtubeLoading.style.display = "none";
-              fetchYoutubeBtn.disabled = false;
+              console.error("[Live Recording] Start error:", err);
+              showRecordingError("Could not start recording. Please try again.");
             }
           });
+        }
+
+        // Pause/Resume
+        if (pauseResumeBtn) {
+          pauseResumeBtn.addEventListener("click", () => {
+            if (!isRecording) return;
+
+            if (isPaused) {
+              // Resume
+              isPaused = false;
+              pauseResumeBtn.textContent = "Pause";
+              updateStatus("live");
+              recordingWaveform.style.display = "flex";
+              
+              // Adjust start time to account for paused duration
+              recordingStartTime = Date.now() - (recordingElapsed * 1000);
+              timerInterval = setInterval(updateTimer, 1000);
+              
+              try {
+                recognition.start();
+              } catch (err) {}
+            } else {
+              // Pause
+              isPaused = true;
+              pauseResumeBtn.textContent = "Resume";
+              updateStatus("paused");
+              recordingWaveform.style.display = "none";
+              clearInterval(timerInterval);
+              
+              try {
+                recognition.stop();
+              } catch (err) {}
+            }
+          });
+        }
+
+        // Done Recording
+        if (doneRecordingBtn) {
+          doneRecordingBtn.addEventListener("click", () => {
+            isRecording = false;
+            isPaused = false;
+            clearInterval(timerInterval);
+            
+            try {
+              recognition.stop();
+            } catch (err) {}
+
+            // Update UI
+            updateStatus("ready");
+            recordingWaveform.style.display = "none";
+            recordingLanguage.disabled = false;
+            startRecordingBtn.style.display = "inline-block";
+            startRecordingBtn.textContent = "Start New Recording";
+            pauseResumeBtn.style.display = "none";
+            doneRecordingBtn.style.display = "none";
+            recordingTimer.style.display = "none";
+
+            // Show use transcript button if we have content
+            if (finalTranscript.trim()) {
+              useTranscriptBtn.style.display = "block";
+            }
+
+            // Clear interim display
+            updateInterimDisplay("");
+
+            console.log("[Live Recording] Stopped. Final transcript length:", finalTranscript.length);
+          });
+        }
+
+        // Use Transcript - populate textarea
+        if (useTranscriptBtn) {
+          useTranscriptBtn.addEventListener("click", () => {
+            if (finalTranscript.trim()) {
+              // Get all transcript entries and format them
+              const entries = liveTranscriptContent.querySelectorAll('.transcript-entry');
+              let formattedTranscript = "";
+              
+              entries.forEach(entry => {
+                const text = entry.querySelector('.transcript-text:not(.interim)');
+                if (text) {
+                  formattedTranscript += text.textContent + "\n";
+                }
+              });
+
+              // Populate textarea
+              textarea.value = formattedTranscript.trim();
+              updateCounter();
+              
+              // Highlight textarea
+              textarea.focus();
+              textarea.style.border = "2px solid #7c3aed";
+              
+              // Scroll to textarea
+              textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              
+              console.log("[Live Recording] Transcript populated to textarea");
+            }
+          });
+        }
+
+        // Helper: Update timer display
+        function updateTimer() {
+          recordingElapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+          recordingTimer.textContent = formatTimestamp(recordingElapsed);
+        }
+
+        // Helper: Format seconds to MM:SS
+        function formatTimestamp(seconds) {
+          const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+          const secs = (seconds % 60).toString().padStart(2, '0');
+          return `${mins}:${secs}`;
+        }
+
+        // Helper: Update status badge
+        function updateStatus(status) {
+          recordingStatus.className = 'recording-status-badge ' + status;
+          if (status === 'ready') {
+            recordingStatus.textContent = 'Ready';
+          } else if (status === 'live') {
+            recordingStatus.textContent = 'Live';
+          } else if (status === 'paused') {
+            recordingStatus.textContent = 'Paused';
+          }
+        }
+
+        // Helper: Add transcript entry with timestamp
+        function addTranscriptEntry(timestamp, text, isInterim) {
+          // Remove any existing interim entry
+          const existingInterim = liveTranscriptContent.querySelector('.transcript-entry.interim');
+          if (existingInterim) {
+            existingInterim.remove();
+          }
+
+          const entry = document.createElement('div');
+          entry.className = 'transcript-entry' + (isInterim ? ' interim' : '');
+          entry.innerHTML = `
+            <span class="transcript-timestamp">${timestamp}</span>
+            <span class="transcript-text ${isInterim ? 'interim' : ''}">${text}</span>
+          `;
+          liveTranscriptContent.appendChild(entry);
+          
+          // Auto-scroll to bottom
+          liveTranscriptBox.scrollTop = liveTranscriptBox.scrollHeight;
+        }
+
+        // Helper: Update interim display
+        function updateInterimDisplay(text) {
+          // Remove existing interim
+          const existingInterim = liveTranscriptContent.querySelector('.transcript-entry.interim');
+          if (existingInterim) {
+            existingInterim.remove();
+          }
+
+          if (text) {
+            const timestamp = formatTimestamp(recordingElapsed);
+            const entry = document.createElement('div');
+            entry.className = 'transcript-entry interim';
+            entry.innerHTML = `
+              <span class="transcript-timestamp">${timestamp}</span>
+              <span class="transcript-text interim">${text}</span>
+            `;
+            liveTranscriptContent.appendChild(entry);
+            liveTranscriptBox.scrollTop = liveTranscriptBox.scrollHeight;
+          }
+        }
+
+        // Helper: Show recording error
+        function showRecordingError(message) {
+          recordingError.textContent = message;
+          recordingError.style.display = "block";
+          setTimeout(() => {
+            recordingError.style.display = "none";
+          }, 5000);
         }
 
         // Audio/Video transcription
@@ -4249,28 +4743,9 @@ Sarah: Alright, let's wrap up. Great work everyone.`;
           audioFileInput.addEventListener("change", () => {
             const file = audioFileInput.files[0];
             if (file) {
-              // Check file size (25MB limit)
-              const maxSize = 25 * 1024 * 1024;
-              const warningSize = 10 * 1024 * 1024; // 10MB warning threshold
-              
-              if (file.size > maxSize) {
-                audioFilename.textContent = "File too large (max 25MB)";
-                audioFilename.style.color = "#ef4444";
-                audioFileInput.value = "";
-              } else {
-                audioFilename.textContent = file.name;
-                audioFilename.style.color = "";
-                audioError.style.display = "none";
-                
-                // Show warning for large files
-                if (file.size > warningSize) {
-                  audioError.textContent = "⚠️ Large files may take several minutes to transcribe.";
-                  audioError.style.display = "block";
-                  audioError.style.background = "rgba(245, 158, 11, 0.15)";
-                  audioError.style.borderColor = "rgba(245, 158, 11, 0.35)";
-                  audioError.style.color = "#fcd34d";
-                }
-              }
+              audioFilename.textContent = file.name;
+              audioFilename.style.color = "";
+              audioError.style.display = "none";
             }
           });
         }
@@ -4280,14 +4755,6 @@ Sarah: Alright, let's wrap up. Great work everyone.`;
             const file = audioFileInput.files[0];
             if (!file) {
               audioError.textContent = "Please select an audio/video file first";
-              audioError.style.display = "block";
-              return;
-            }
-
-            // Check file size again
-            const maxSize = 25 * 1024 * 1024;
-            if (file.size > maxSize) {
-              audioError.textContent = "File too large. Maximum size is 25MB.";
               audioError.style.display = "block";
               return;
             }

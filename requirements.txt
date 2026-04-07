@@ -4,7 +4,7 @@ python-dotenv
 reportlab
 openpyxl
 gunicorn
-youtube-transcript-api
 flask-wtf
 groq
 Pillow
+ffmpeg-python
