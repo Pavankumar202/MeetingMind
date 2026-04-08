@@ -131,11 +131,11 @@ MeetingMind
 
 
 def send_action_item_emails(action_items: list[dict], emails: list[str]) -> tuple[int, int]:
+    api_key = os.getenv("BREVO_API_KEY", "").strip()
     sender_email = os.getenv("SENDER_EMAIL", "").strip()
-    sender_app_password = os.getenv("SENDER_APP_PASSWORD", "").strip()
-    
-    if not sender_email or not sender_app_password:
-        raise RuntimeError("SENDER_EMAIL or SENDER_APP_PASSWORD is missing from .env file.")
+
+    if not api_key:
+        raise RuntimeError("BREVO_API_KEY is missing from environment.")
 
     to_pairs = []
     for idx, item in enumerate(action_items):
@@ -150,27 +150,28 @@ def send_action_item_emails(action_items: list[dict], emails: list[str]) -> tupl
         return 0, skipped_count
 
     subject = "Action item assigned to you — MeetingMind"
-    context = ssl.create_default_context()
-    with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as server:
-        server.ehlo()
-        server.starttls(context=context)
-        server.ehlo()
-        server.login(sender_email, sender_app_password)
-        for to_email, item in to_pairs:
-            msg = EmailMessage()
-            msg["From"] = f"MeetingMind <{sender_email}>"
-            msg["To"] = to_email
-            msg["Subject"] = subject
-            msg.set_content(
-                _build_email_body(
-                    person_responsible=str(item.get("person_responsible", "")),
-                    action_item=str(item.get("action_item", "")),
-                    deadline=str(item.get("deadline", "")),
-                    priority=str(item.get("priority", "Medium")),
-                )
-            )
-            server.send_message(msg)
-            sent_count += 1
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {"api-key": api_key, "Content-Type": "application/json"}
+
+    for to_email, item in to_pairs:
+        body = _build_email_body(
+            person_responsible=str(item.get("person_responsible", "")),
+            action_item=str(item.get("action_item", "")),
+            deadline=str(item.get("deadline", "")),
+            priority=str(item.get("priority", "Medium")),
+        )
+        payload = {
+            "sender": {"name": "MeetingMind", "email": sender_email},
+            "to": [{"email": to_email}],
+            "subject": subject,
+            "textContent": body,
+        }
+        try:
+            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            if response.status_code == 201:
+                sent_count += 1
+        except Exception:
+            pass
 
     return sent_count, skipped_count
 
