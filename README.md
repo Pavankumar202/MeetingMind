@@ -40,7 +40,7 @@ and MeetingMind instantly:
 | 📊 Meeting Summary | Auto-generates a concise 2-3 sentence summary |
 | 🎙️ Audio Transcription | Upload audio/video files up to 1GB — ffmpeg compresses to mono MP3 at 16kHz, then Groq Whisper transcribes in seconds |
 | 🎙️ Live Meeting Recording | Record directly in the browser using your microphone — real-time transcription with pause/resume, multi-language support, and live waveform. Powered by Web Speech API. Works best on Chrome and Edge. |
-| 📧 Email Assignees | Send action items to assignees via Gmail SMTP with Google Calendar links |
+| 📧 Email Assignees | Send action items to assignees via Brevo REST API with Google Calendar links |
 | 📅 Calendar Export | Download .ics file for Google Calendar, Outlook, Apple Calendar |
 | 📄 PDF Export | Professional branded PDF report with summary and action items |
 | 📊 Excel Export | Color-coded Excel file with priority highlighting |
@@ -58,7 +58,7 @@ and MeetingMind instantly:
 | AI Extraction & Chat | Groq API — LLaMA 3.3 70B |
 | Audio Transcription | Groq Whisper API (whisper-large-v3) with ffmpeg compression |
 | Audio Processing | ffmpeg (extract audio, convert to mono MP3 at 16kHz) |
-| Email Delivery | Gmail SMTP (smtplib) |
+| Email Delivery | Brevo REST API (api.brevo.com) |
 | PDF Generation | ReportLab |
 | Excel Generation | OpenPyXL |
 | Live Recording | Web Speech API (built-in browser API — no install needed) |
@@ -75,8 +75,7 @@ and MeetingMind instantly:
   - Mac: `brew install ffmpeg`
   - Linux: `sudo apt install ffmpeg`
 - A Groq API key (free at https://console.groq.com)
-- A Gmail account with App Password enabled 
-  (Google Account → Security → 2FA → App Passwords)
+- A Brevo API key (free at https://www.brevo.com — sign up and get API key from SMTP & API section)
 
 ### 1. Clone the repository
 ```bash
@@ -107,8 +106,8 @@ pip install -r requirements.txt
 Create a `.env` file in the project root:
 ```
 GROQ_API_KEY=your_groq_api_key_here
-SENDER_EMAIL=your_gmail@gmail.com
-SENDER_APP_PASSWORD=your_16_char_app_password
+SENDER_EMAIL=your_sender_email@example.com
+BREVO_API_KEY=your_brevo_api_key_here
 ```
 
 ### 5. Run the application
@@ -168,13 +167,18 @@ Then open `http://127.0.0.1:5000/` in your browser.
 |---|---|---|
 | `GROQ_API_KEY` | Yes | API key for LLaMA 3.3 70B and Whisper transcription (get at [console.groq.com](https://console.groq.com)) |
 | `SENDER_EMAIL` | Yes | Gmail address used to send emails |
-| `SENDER_APP_PASSWORD` | Yes | Gmail App Password (not your regular Gmail password). Generate at: Google Account → Security → 2FA → App Passwords |
+| `BREVO_API_KEY` | Yes | API key from Brevo (get at [brevo.com](https://www.brevo.com) → SMTP & API → API Keys) |
 
 ---
 
 ## 🐛 Bug Fixes / Changelog
 
-### v1.3 (Latest)
+### v1.4 (Latest)
+- **Switched email delivery from Gmail SMTP to Brevo REST API** —
+  More reliable transactional email delivery via Brevo (formerly Sendinblue).
+  Requires BREVO_API_KEY instead of SENDER_APP_PASSWORD.
+
+### v1.3
 - **Replaced YouTube URL input with Live Meeting Recording** — 
   Users can now record directly in the browser using the Web Speech API.
   Supports pause/resume, live waveform, timestamps, and multi-language 
